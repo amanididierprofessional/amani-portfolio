@@ -1,24 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { Hero, WorkSection, ContentSection, AboutSection, AdventuresSection, ContactSection } from '@/components/portfolio';
+import { pageHead } from '@/lib/portfolio';
 export const Route = createFileRoute("/")({
+  head: () => pageHead('Builder, creator & curious human', 'Meet Amani Didier, also known as Aidi. Explore web projects, tech experiments, creative stories, and a world of curiosity.'),
   component: Index,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  return <><Hero /><div className="interest-band"><div className="page-width"><span>BUILDING COOL THINGS</span><span>✳</span><span>FOLLOWING CURIOSITY</span><span>✳</span><span>SHARING THE JOURNEY</span><span>✳</span><span>HAVING A LITTLE FUN</span></div></div><WorkSection /><ContentSection /><AboutSection /><AdventuresSection /><ContactSection /></>;
 }
