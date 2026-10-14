@@ -17,11 +17,11 @@ export function Hero() {
     <div className="hero-copy"><div className="eyebrow"><span className="status-dot" /> A BUILDER. A CREATOR. A CURIOUS HUMAN.</div>
       <h1>Hey, I’m <span className="name-highlight">Aidi<svg viewBox="0 0 220 17" aria-hidden="true"><path d="M5 12Q108 0 212 8M22 16Q115 7 193 13" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" /></svg></span><span className="hello-period">.</span></h1>
       <h2>I turn “what if”<br />into <span className="serif-word">something real.</span></h2>
-      <p>I’m Amani Didier. I build things for the web, tell stories,<br className="desktop-break" /> and follow my curiosity wherever it takes me.</p>
+      <p>I’m Amani Ishimwe Didier. I build things for the web, tell stories,<br className="desktop-break" /> and follow my curiosity wherever it takes me.</p>
       <div className="hero-actions"><Button asChild className="primary-action"><Link to="/work">Explore my work <ArrowUpRight /></Link></Button><Button asChild variant="outline" className="secondary-action"><Link to="/contact">Let’s talk <span aria-hidden="true">↗</span></Link></Button></div>
       <div className="hero-footnote"><span className="mini-spark">✳</span> A little code. A little creativity. A lot of heart.</div>
     </div>
-    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that’s me <span>↴</span></span><div className="portrait-frame"><img src={portrait.url} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
+    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that’s me <span>↴</span></span><div className="portrait-frame"><img src={portrait.url} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
   </section>;
 }
 
