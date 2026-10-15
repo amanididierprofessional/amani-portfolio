@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import projectExtraCss from "../styles-projects-extra.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from '@/components/site-shell';
 
@@ -91,6 +92,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "stylesheet",
+        href: projectExtraCss,
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
