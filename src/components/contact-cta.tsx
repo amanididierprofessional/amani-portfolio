@@ -1,7 +1,17 @@
 import { ArrowUpRight, Github, Youtube, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { github, youtube, email, phone, whatsapp } from '@/lib/portfolio';
-import { Star } from '@/components/portfolio';
+
+function Star({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden="true">
+      <path
+        d="M30 3 35 23 54 14 41 30 56 42 36 37 30 57 25 37 5 44 19 30 5 15 25 23Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
 
 export function ContactSection({ full = false }: { full?: boolean }) {
   return (

@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import projectExtraCss from "../styles-projects-extra.css?url";
+import contactCss from "../styles-contact.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from '@/components/site-shell';
 
@@ -80,27 +81,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aidi — Amani Didier" },
-      { name: "description", content: "A builder, creator, and curious human. The portfolio of Amani Didier." },
-      { name: "author", content: "Amani Didier" },
-      { property: "og:title", content: "Aidi — Amani Didier" },
-      { property: "og:description", content: "Web projects, creative experiments, and stories by Amani Didier." },
+      { title: "Aidi — Amani Didier | Amani Ishimwe Didier" },
+      {
+        name: "description",
+        content:
+          "Portfolio of Amani Ishimwe Didier (Aidi) — Rwandan builder & creator. Projects: Stoke Yange, Bob, Urugendo, Genie, Billy. Contact: ishimweamanid@gmail.com · 0796919900.",
+      },
+      { name: "author", content: "Amani Ishimwe Didier" },
+      { name: "keywords", content: "Amani Ishimwe Didier, Amani Didier, Aidi, Stoke Yange, Bob AI, Urugendo, Genie AI, Billy YouTube, Rwanda developer, Musanze, portfolio" },
+      { property: "og:title", content: "Aidi — Amani Ishimwe Didier" },
+      {
+        property: "og:description",
+        content: "Web projects, AI tools, and creative experiments by Amani Didier.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      {
-        rel: "stylesheet",
-        href: projectExtraCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: projectExtraCss },
+      { rel: "stylesheet", href: contactCss },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;750;800;900&family=DM+Serif+Display:ital@0;1&family=Kalam:wght@400;700&display=swap' },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;750;800;900&family=DM+Serif+Display:ital@0;1&family=Kalam:wght@400;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -129,7 +136,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <SiteHeader />
-      <main><Outlet /></main>
+      <main>
+        <Outlet />
+      </main>
       <SiteFooter />
     </QueryClientProvider>
   );
