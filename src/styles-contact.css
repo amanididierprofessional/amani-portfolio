@@ -1,0 +1,41 @@
+/* Contact + footer contact details */
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-contact a:hover {
+  color: var(--blue);
+}
+.contact-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+  justify-content: center;
+}
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--quiet);
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--foreground);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.contact-pill:hover {
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+.site-footer {
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
