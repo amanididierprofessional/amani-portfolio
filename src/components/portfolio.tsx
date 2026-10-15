@@ -3,8 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowUpRight, Github, Youtube, Play, Sparkles, Code2, Mic, Heart, Waves, Plane, Footprints, Mountain, Rocket, ExternalLink, Palette, Film, Box, Search, Store, GraduationCap, Users, Youtube as YtIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { github, youtube, projects } from '@/lib/portfolio';
-import portrait from '@/assets/aidi-portrait.png.asset.json';
-import avatar from '@/assets/aidi-avatar.png.asset.json';
+import { portraitUrl, avatarUrl } from '@/lib/images';
 import lake from '@/assets/lake-kivu.jpg';
 import moon from '@/assets/moon-dream.jpg';
 
@@ -21,7 +20,7 @@ export function Hero() {
       <div className="hero-actions"><Button asChild className="primary-action"><Link to="/work">Explore my work <ArrowUpRight /></Link></Button><Button asChild variant="outline" className="secondary-action"><Link to="/contact">Let's talk <span aria-hidden="true">↗</span></Link></Button></div>
       <div className="hero-footnote"><span className="mini-spark">✳</span> A little code. A little creativity. A lot of heart.</div>
     </div>
-    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that's me <span>↴</span></span><div className="portrait-frame"><img src={portrait.url} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
+    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that's me <span>↴</span></span><div className="portrait-frame"><img src={portraitUrl} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
   </section>;
 }
 
@@ -269,7 +268,7 @@ export function ContentSection() {
             <br />
             ONE <span>BIG IDEA.</span>
           </div>
-          <img src={avatar.url} alt="Aidi chipmunk mascot" loading="lazy" width="260" height="260" />
+          <img src={avatarUrl} alt="Aidi chipmunk mascot" loading="lazy" width="260" height="260" />
           <span className="play-button">
             <Play fill="currentColor" />
           </span>
@@ -345,7 +344,7 @@ export function AboutSection({ full = false }: { full?: boolean }) {
       )}
       {full && (
         <div className="about-extra">
-          <img src={portrait.url} alt="Aidi with his favorite green headphones" loading="lazy" width="300" height="300" />
+          <img src={portraitUrl} alt="Aidi with his favorite green headphones" loading="lazy" width="300" height="300" />
           <div>
             <span className="handwritten">forever a work in progress.</span>
             <h3>Build. Learn. Share. Repeat.</h3>
@@ -409,7 +408,7 @@ const adventures = [
   {
     title: 'Life has a soundtrack',
     icon: Mic,
-    image: portrait.url,
+    image: portraitUrl,
     note: 'Singing, headphones on, and sharing a laugh. Some of the best moments need no big plan.',
     label: 'THE LITTLE THINGS',
     type: 'Little joys',
@@ -458,7 +457,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
       )}
       <div className="adventure-layout">
         <div className="adventure-image">
-          <img src={current.image} alt={`${current.title} — illustrative adventure artwork`} loading="lazy" width="1536" height="1024" />
+          <img src={typeof current.image === 'string' ? current.image : (current.image as string)} alt={`${current.title} — illustrative adventure artwork`} loading="lazy" width="1536" height="1024" />
           <span className="image-caption">{current.label}</span>
         </div>
         <div className="adventure-details">
