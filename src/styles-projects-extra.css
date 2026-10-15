@@ -1,0 +1,202 @@
+/* Extra project card & detail styles — imported or merged into styles.css */
+
+.art-stokeyange {
+  background: linear-gradient(145deg, #ea580c 0%, #f97316 55%, #fb923c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.stokeyange-card {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 16px;
+  padding: 28px 32px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  transform: rotate(-2deg);
+}
+.stokeyange-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  background: #fff;
+  color: #ea580c;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+.stokeyange-brand {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.stokeyange-tagline {
+  font-size: 11px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+.stokeyange-pills {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.stokeyange-pills span {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 9px;
+  font-weight: 600;
+}
+.stokeyange-note {
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.art-genie {
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f8fafc;
+}
+.genie-inner {
+  text-align: center;
+}
+.genie-panda {
+  font-size: 56px;
+  line-height: 1;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+}
+.genie-brand {
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 8px;
+  letter-spacing: -0.03em;
+}
+.genie-tagline {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.art-billy {
+  background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--ink);
+}
+.art-billy .project-icon {
+  background: #fff;
+  color: #dc2626;
+}
+
+.art-ict {
+  background: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--ink);
+}
+.art-ict .project-icon {
+  background: #fff;
+  color: #059669;
+}
+
+.art-campus {
+  background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--ink);
+}
+.art-campus .project-icon {
+  background: #fff;
+  color: #2563eb;
+}
+
+/* Project detail page */
+.project-detail {
+  padding-top: 48px;
+  padding-bottom: 40px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  margin-bottom: 28px;
+  transition: color 0.15s;
+}
+.back-link:hover {
+  color: var(--foreground);
+}
+.project-detail-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.project-detail-visual {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px var(--shade);
+}
+.project-art-large {
+  aspect-ratio: 1.6;
+  min-height: 340px;
+}
+.project-detail-copy h1 {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 8px;
+}
+.project-detail-copy .lead {
+  font-size: 16px;
+  color: var(--muted-foreground);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.project-detail-copy .detail-body {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted-foreground);
+  margin-top: 18px;
+}
+
+@media (max-width: 860px) {
+  .project-detail-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .project-detail-copy h1 {
+    font-size: 32px;
+  }
+}
+
+/* Make project cover link fill nicely */
+a.project-cover-button {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
