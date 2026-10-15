@@ -1,5 +1,9 @@
 export const github = 'https://github.com/amanididier';
 export const youtube = 'https://www.youtube.com/@Aidi';
+export const email = 'ishimweamanid@gmail.com';
+export const phone = '0796919900';
+export const phoneIntl = '+250796919900';
+export const whatsapp = 'https://wa.me/250796919900';
 
 export type Project = {
   slug: string;
