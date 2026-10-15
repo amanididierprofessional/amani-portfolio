@@ -1,32 +1,38 @@
-/* Extra project card & detail styles — imported or merged into styles.css */
+/* Project card brand visuals + minimal detail page */
 
 .art-stokeyange {
-  background: linear-gradient(145deg, #ea580c 0%, #f97316 55%, #fb923c 100%);
+  background: linear-gradient(145deg, #ea580c 0%, #f97316 60%, #fb923c 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  position: relative;
 }
 .stokeyange-card {
   text-align: center;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 16px;
-  padding: 28px 32px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
-  transform: rotate(-2deg);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 18px;
+  padding: 32px 36px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+  transform: rotate(-1.5deg);
 }
-.stokeyange-icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 12px;
+.stokeyange-icon-img {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+  border-radius: 18px;
   background: #fff;
-  color: #ea580c;
-  border-radius: 16px;
   display: grid;
   place-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+.stokeyange-icon-img img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 .stokeyange-brand {
   font-size: 26px;
@@ -57,31 +63,51 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
+.art-bob {
+  background: #f5f5f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.bob-logo-hero {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
+}
+.bob-brand-label {
+  position: absolute;
+  bottom: 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.art-urugendo-logo {
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.urugendo-logo-img {
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+}
+
 .art-genie {
-  background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: #0f0f12;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #f8fafc;
 }
-.genie-inner {
-  text-align: center;
-}
-.genie-panda {
-  font-size: 56px;
-  line-height: 1;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
-}
-.genie-brand {
-  font-size: 32px;
-  font-weight: 800;
-  margin-top: 8px;
-  letter-spacing: -0.03em;
-}
-.genie-tagline {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 4px;
+.genie-logo-img {
+  max-width: 72%;
+  height: auto;
+  object-fit: contain;
 }
 
 .art-billy {
@@ -126,10 +152,10 @@
   color: #2563eb;
 }
 
-/* Project detail page */
+/* Minimal project detail page */
 .project-detail {
-  padding-top: 48px;
-  padding-bottom: 40px;
+  padding: 40px 0 80px;
+  max-width: 720px;
 }
 .back-link {
   display: inline-flex;
@@ -140,56 +166,59 @@
   color: var(--muted-foreground);
   margin-bottom: 28px;
   transition: color 0.15s;
+  text-decoration: none;
 }
 .back-link:hover {
   color: var(--foreground);
 }
-.project-detail-hero {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
 .project-detail-visual {
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1px solid var(--border);
-  box-shadow: 0 8px 30px var(--shade);
+  margin-bottom: 32px;
+  box-shadow: 0 6px 24px var(--shade);
 }
 .project-art-large {
-  aspect-ratio: 1.6;
-  min-height: 340px;
+  aspect-ratio: 16 / 9;
+  min-height: 280px;
 }
-.project-detail-copy h1 {
-  font-size: 42px;
+.project-detail-meta .eyebrow {
+  margin-bottom: 6px;
+}
+.project-detail-meta h1 {
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.15;
-  margin-top: 8px;
+  margin: 0;
 }
-.project-detail-copy .lead {
+.project-detail-meta .lead {
   font-size: 16px;
   color: var(--muted-foreground);
-  margin-top: 12px;
-  line-height: 1.6;
+  margin-top: 10px;
+  line-height: 1.55;
 }
-.project-detail-copy .detail-body {
+.project-detail-meta .detail-body {
   font-size: 14px;
-  line-height: 1.85;
+  line-height: 1.8;
   color: var(--muted-foreground);
-  margin-top: 18px;
+  margin-top: 16px;
+}
+.project-detail-meta .tags {
+  margin-top: 20px;
+}
+.project-detail-meta .hero-actions {
+  margin-top: 28px;
 }
 
-@media (max-width: 860px) {
-  .project-detail-hero {
-    grid-template-columns: 1fr;
-    gap: 28px;
+@media (max-width: 640px) {
+  .project-detail-meta h1 {
+    font-size: 28px;
   }
-  .project-detail-copy h1 {
-    font-size: 32px;
+  .project-art-large {
+    min-height: 200px;
   }
 }
 
-/* Make project cover link fill nicely */
 a.project-cover-button {
   display: block;
   width: 100%;

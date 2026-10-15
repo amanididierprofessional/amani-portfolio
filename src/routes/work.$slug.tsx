@@ -1,8 +1,8 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
-import { ArrowLeft, Github, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Github, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getProject, pageHead, github } from '@/lib/portfolio';
-import { ProjectVisual, ContactSection } from '@/components/portfolio';
+import { ProjectVisual } from '@/components/portfolio';
 
 export const Route = createFileRoute('/work/$slug')({
   head: ({ params }) => {
@@ -25,51 +25,47 @@ function ProjectPage() {
     : null;
 
   return (
-    <>
-      <section className="project-detail page-width inner-page">
-        <Link to="/work" className="back-link">
-          <ArrowLeft size={16} /> All projects
-        </Link>
+    <section className="project-detail page-width">
+      <Link to="/work" className="back-link">
+        <ArrowLeft size={15} /> Back to projects
+      </Link>
 
-        <div className="project-detail-hero">
-          <div className="project-detail-visual">
-            <ProjectVisual visual={project.visual} large />
-          </div>
-          <div className="project-detail-copy">
-            <div className="eyebrow muted-eyebrow">PROJECT</div>
-            <h1>
-              {project.name}
-              <span className="heading-dot">.</span>
-            </h1>
-            <p className="lead">{project.description}</p>
-            <p className="detail-body">{project.detail}</p>
+      <div className="project-detail-visual">
+        <ProjectVisual visual={project.visual} large />
+      </div>
 
-            <div className="tags" style={{ marginTop: 18 }}>
-              {project.tags.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
+      <div className="project-detail-meta">
+        <p className="eyebrow muted-eyebrow">PROJECT</p>
+        <h1>
+          {project.name}
+          <span className="heading-dot">.</span>
+        </h1>
+        <p className="lead">{project.description}</p>
+        <p className="detail-body">{project.detail}</p>
 
-            <div className="hero-actions" style={{ marginTop: 28 }}>
-              {repoUrl && (
-                <Button asChild className="primary-action">
-                  <a href={repoUrl} target="_blank" rel="noreferrer">
-                    <Github size={16} /> View repository
-                  </a>
-                </Button>
-              )}
-              {project.live && (
-                <Button asChild variant="outline" className="secondary-action">
-                  <a href={project.live} target="_blank" rel="noreferrer">
-                    Visit live <ArrowUpRight size={16} />
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
+        <div className="tags">
+          {project.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
         </div>
-      </section>
-      <ContactSection />
-    </>
+
+        <div className="hero-actions">
+          {repoUrl && (
+            <Button asChild className="primary-action">
+              <a href={repoUrl} target="_blank" rel="noreferrer">
+                <Github size={15} /> View repository
+              </a>
+            </Button>
+          )}
+          {project.live && (
+            <Button asChild variant="outline" className="secondary-action">
+              <a href={project.live} target="_blank" rel="noreferrer">
+                Visit live <ArrowUpRight size={15} />
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
