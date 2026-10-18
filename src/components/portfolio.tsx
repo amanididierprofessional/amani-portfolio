@@ -3,9 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowUpRight, Github, Youtube, Play, Sparkles, Code2, Mic, Heart, Waves, Plane, Footprints, Mountain, Rocket, ExternalLink, Palette, Film, Box, Search, Store, GraduationCap, Users, Youtube as YtIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { github, youtube, projects } from '@/lib/portfolio';
-import { portraitUrl, avatarUrl, projectPreviews } from '@/lib/images';
-import lake from '@/assets/lake-kivu.jpg';
-import moon from '@/assets/moon-dream.jpg';
+import { portraitUrl, avatarUrl, projectPreviews, adventureImages } from '@/lib/images';
 
 export function Star({ className = '' }: { className?: string }) {
   return <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M30 3 35 23 54 14 41 30 56 42 36 37 30 57 25 37 5 44 19 30 5 15 25 23Z" fill="currentColor" /></svg>;
@@ -29,15 +27,9 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'bob') {
     return (
-      <div className={`${cls} art-bob art-preview`}>
-        <img
-          className="art-preview-img"
-          src={projectPreviews.bob}
-          alt="Bob — AI research companion landing preview"
-          loading="lazy"
-        />
-        <div className="art-preview-fade" />
-        <span className="art-preview-label">Bob · research companion</span>
+      <div className={`${cls} art-bob`}>
+        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion" loading="lazy" />
+        <div className="art-bob-tag">Your friendly <span>AI research</span> companion</div>
       </div>
     );
   }
@@ -64,12 +56,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
   if (visual === 'genie') {
     return (
       <div className={`${cls} art-genie art-preview`}>
-        <img
-          className="art-preview-img"
-          src={projectPreviews.genie}
-          alt="Genie — Learn AI the fun way"
-          loading="lazy"
-        />
+        <img className="art-preview-img" src={projectPreviews.genie} alt="Genie — Learn AI the fun way" loading="lazy" />
         <div className="art-preview-fade" />
         <span className="art-preview-label">Genie · learn AI the fun way</span>
       </div>
@@ -79,13 +66,10 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
   if (visual === 'urugendo') {
     return (
       <div className={`${cls} art-urugendo`}>
-        <img src={lake} alt="Urugendo landscape" loading="lazy" width="1536" height="1024" />
-        <div className="urugendo-window">
-          <div className="travel-nav">urugendo<span>Discover your next adventure ↗</span></div>
-          <div className="travel-title">The world is<br />waiting for you.</div>
-          <span className="travel-cta">Let's go somewhere ↗</span>
+        <div className="urugendo-frame">
+          <img src={projectPreviews.urugendoIcon} alt="Urugendo — bus booking in Rwanda" loading="lazy" />
         </div>
-        <div className="project-label">A little adventure, a click away.</div>
+        <span className="urugendo-caption">Urugendo · Rwanda journeys</span>
       </div>
     );
   }
@@ -293,12 +277,12 @@ export function AboutSection({ full = false }: { full?: boolean }) {
 }
 
 const adventures = [
-  { title: 'By the water', icon: Waves, image: lake, note: "A lake, an ocean, a quiet shore. There's something about water that makes everything feel a little lighter.", label: 'MY HAPPY PLACE', type: 'Earth' },
-  { title: 'To the moon & Mars', icon: Rocket, image: moon, note: 'Still on the dream list. One day, a different kind of adventure — a little further from home.', label: 'ON THE DREAM LIST', type: 'Dreams' },
-  { title: 'Musanze mountains', icon: Mountain, image: lake, note: "Rwanda's mountains and the incredible mountain gorillas of Musanze. Nature at its most extraordinary.", label: 'RWANDA, WITH LOVE', type: 'Earth' },
-  { title: 'Above the clouds', icon: Plane, image: moon, note: 'Window seat, always. I love that moment when the world turns into a patchwork far below.', label: 'A DIFFERENT PERSPECTIVE', type: 'Dreams' },
-  { title: 'One more kilometer', icon: Footprints, image: lake, note: 'A run, a clear head, and a little more energy for whatever comes next.', label: 'KEEP MOVING', type: 'Little joys' },
-  { title: 'Life has a soundtrack', icon: Mic, image: portraitUrl, note: 'Singing, headphones on, and sharing a laugh. Some of the best moments need no big plan.', label: 'THE LITTLE THINGS', type: 'Little joys' },
+  { title: 'By the water', icon: Waves, image: adventureImages.water, note: "A lake, an ocean, a quiet shore. There's something about water that makes everything feel a little lighter.", label: 'MY HAPPY PLACE', type: 'Earth' },
+  { title: 'To the moon & Mars', icon: Rocket, image: adventureImages.moon, note: 'Still on the dream list. One day, a different kind of adventure — a little further from home.', label: 'ON THE DREAM LIST', type: 'Dreams' },
+  { title: 'Musanze mountains', icon: Mountain, image: adventureImages.mountains, note: "Rwanda's mountains and the incredible mountain gorillas of Musanze. Nature at its most extraordinary.", label: 'RWANDA, WITH LOVE', type: 'Earth' },
+  { title: 'Above the clouds', icon: Plane, image: adventureImages.airplane, note: 'Window seat, always. I love that moment when the world turns into a patchwork far below.', label: 'A DIFFERENT PERSPECTIVE', type: 'Dreams' },
+  { title: 'One more kilometer', icon: Footprints, image: adventureImages.running, note: 'A run, a clear head, and a little more energy for whatever comes next.', label: 'KEEP MOVING', type: 'Little joys' },
+  { title: 'Life has a soundtrack', icon: Mic, image: adventureImages.music, note: 'Singing, headphones on, and sharing a laugh. Some of the best moments need no big plan.', label: 'THE LITTLE THINGS', type: 'Little joys' },
 ];
 
 export function AdventuresSection({ full = false }: { full?: boolean }) {
@@ -308,7 +292,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
   const current = visible[active] ?? visible[0];
   if (!current) return null;
   return (
-    <section className={`adventure-section page-width ${full ? 'inner-page' : ''}`}>
+    <section className={`adventure-section page-width ${full ? 'inner-page' : ''`}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">04 / AWAY FROM THE KEYBOARD</div>
@@ -330,7 +314,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
       )}
       <div className="adventure-layout">
         <div className="adventure-image">
-          <img src={typeof current.image === 'string' ? current.image : (current.image as string)} alt={current.title} loading="lazy" width="1536" height="1024" />
+          <img src={current.image} alt={current.title} loading="lazy" width="1200" height="800" />
           <span className="image-caption">{current.label}</span>
         </div>
         <div className="adventure-details">
@@ -344,7 +328,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
           <span className="handwritten">a life beyond the tabs.</span>
           <h3>{current.title}</h3>
           <p>{current.note}</p>
-          <span className="illustration-note">A little visual daydream, not a travel photograph.</span>
+          <span className="illustration-note">A visual mood for each adventure — not a personal travel photo.</span>
         </div>
       </div>
     </section>
