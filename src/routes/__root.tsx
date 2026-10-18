@@ -15,6 +15,8 @@ import projectExtraCss from "../styles-projects-extra.css?url";
 import contactCss from "../styles-contact.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from '@/components/site-shell';
+import { SeoJsonLd } from '@/components/seo-jsonld';
+import { DEFAULT_DESCRIPTION, SEO_KEYWORDS, SITE_NAME, SITE_URL } from '@/lib/seo';
 
 function NotFoundComponent() {
   return (
@@ -81,23 +83,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aidi — Amani Didier | Amani Ishimwe Didier" },
-      {
-        name: "description",
-        content:
-          "Portfolio of Amani Ishimwe Didier (Aidi) — Rwandan builder & creator. Projects: Stoke Yange, Bob, Urugendo, Genie, Billy. Contact: ishimweamanid@gmail.com · 0796919900.",
-      },
+      { title: `${SITE_NAME} | Portfolio` },
+      { name: "description", content: DEFAULT_DESCRIPTION },
       { name: "author", content: "Amani Ishimwe Didier" },
-      { name: "keywords", content: "Amani Ishimwe Didier, Amani Didier, Aidi, Stoke Yange, Bob AI, Urugendo, Genie AI, Billy YouTube, Rwanda developer, Musanze, portfolio" },
-      { property: "og:title", content: "Aidi — Amani Ishimwe Didier" },
-      {
-        property: "og:description",
-        content: "Web projects, AI tools, and creative experiments by Amani Didier.",
-      },
+      { name: "keywords", content: SEO_KEYWORDS },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { property: "og:title", content: SITE_NAME },
+      { property: "og:description", content: DEFAULT_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:locale", content: "en_US" },
+      {
+        property: "og:image",
+        content:
+          "https://amani-creative-canvas.lovable.app/__l5e/assets-v1/1666c5fa-cc2b-4384-95f2-e6e60ed60071/aidi-portrait.png",
+      },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SITE_NAME },
+      { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+      {
+        name: "twitter:image",
+        content:
+          "https://amani-creative-canvas.lovable.app/__l5e/assets-v1/1666c5fa-cc2b-4384-95f2-e6e60ed60071/aidi-portrait.png",
+      },
     ],
     links: [
+      { rel: "canonical", href: SITE_URL },
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: projectExtraCss },
       { rel: "stylesheet", href: contactCss },
@@ -135,6 +147,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SeoJsonLd />
       <SiteHeader />
       <main>
         <Outlet />

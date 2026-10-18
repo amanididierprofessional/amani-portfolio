@@ -157,15 +157,5 @@ export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
 }
 
-export function pageHead(title: string, description: string) {
-  return {
-    meta: [
-      { title: `${title} — Aidi · Amani Didier` },
-      { name: 'description', content: description },
-      { property: 'og:title', content: `${title} — Aidi` },
-      { property: 'og:description', content: description },
-      { property: 'og:type', content: 'website' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-    ],
-  };
-}
+/** Re-export strong SEO pageHead (name + project keywords built in). */
+export { pageHead } from '@/lib/seo';
