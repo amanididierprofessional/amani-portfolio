@@ -20,7 +20,7 @@ export const projectPreviews = {
   /** Stoke Yange app icon remains the clean brand mark */
   stokeyange: 'https://stoke-yange.vercel.app/icon-512.png',
   /** Urugendo splash screen, shown inside the phone frame */
-  urugendoIcon: liveScreenshot('https://urugendo-v0.vercel.app/splash'),
+  urugendoIcon: 'https://image.thum.io/get/width/360/crop/720/noanimate/https://urugendo-v0.vercel.app/splash',
 } as const;
 
 /** Distinct, high-quality photos for every Adventures tab. */
