@@ -292,7 +292,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
   const current = visible[active] ?? visible[0];
   if (!current) return null;
   return (
-    <section className={`adventure-section page-width ${full ? 'inner-page' : ''`}>
+    <section className={`adventure-section page-width ${full ? 'inner-page' : ''}`}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">04 / AWAY FROM THE KEYBOARD</div>
