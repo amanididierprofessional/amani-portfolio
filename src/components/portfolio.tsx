@@ -27,9 +27,9 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'bob') {
     return (
-      <div className={`${cls} art-bob`}>
-        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion" loading="lazy" />
-        <div className="art-bob-tag">Your friendly <span>AI research</span> companion</div>
+      <div className={`${cls} art-bob art-live-preview`}>
+        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion website preview" loading="lazy" />
+        <span className="live-preview-caption">BOB · YOUR FRIENDLY AI RESEARCH COMPANION</span>
       </div>
     );
   }
