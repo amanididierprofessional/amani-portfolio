@@ -66,10 +66,15 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
   if (visual === 'urugendo') {
     return (
       <div className={`${cls} art-urugendo`}>
-        <div className="urugendo-frame">
-          <img src={projectPreviews.urugendoIcon} alt="Urugendo — bus booking in Rwanda" loading="lazy" />
+        <div className="urugendo-copy">
+          <span className="urugendo-eyebrow">RWANDA, ONE RIDE AT A TIME</span>
+          <strong>Urugendo<span>.</span></strong>
+          <p>Find your next journey.</p>
+          <span className="urugendo-sticker"><Waves size={12} /> Made for the road</span>
         </div>
-        <span className="urugendo-caption">Urugendo · Rwanda journeys</span>
+        <div className="urugendo-frame">
+          <img src={projectPreviews.urugendoIcon} alt="Urugendo bus-booking app shown on a phone screen" loading="lazy" />
+        </div>
       </div>
     );
   }
