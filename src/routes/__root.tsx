@@ -18,6 +18,11 @@ import { SiteHeader, SiteFooter } from '@/components/site-shell';
 import { SeoJsonLd } from '@/components/seo-jsonld';
 import { DEFAULT_DESCRIPTION, SEO_KEYWORDS, SITE_NAME, SITE_URL } from '@/lib/seo';
 
+const ICON_LG =
+  'https://amani-creative-canvas.lovable.app/__l5e/assets-v1/8ff2a038-5029-4f62-9a75-01744f9b77da/aidi-avatar.png';
+const OG_IMAGE =
+  'https://amani-creative-canvas.lovable.app/__l5e/assets-v1/1666c5fa-cc2b-4384-95f2-e6e60ed60071/aidi-portrait.png';
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -94,26 +99,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:url", content: SITE_URL },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:locale", content: "en_US" },
-      {
-        property: "og:image",
-        content:
-          "https://amani-creative-canvas.lovable.app/__l5e/assets-v1/1666c5fa-cc2b-4384-95f2-e6e60ed60071/aidi-portrait.png",
-      },
+      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: SITE_NAME },
       { name: "twitter:description", content: DEFAULT_DESCRIPTION },
-      {
-        name: "twitter:image",
-        content:
-          "https://amani-creative-canvas.lovable.app/__l5e/assets-v1/1666c5fa-cc2b-4384-95f2-e6e60ed60071/aidi-portrait.png",
-      },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
       { rel: "canonical", href: SITE_URL },
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: projectExtraCss },
       { rel: "stylesheet", href: contactCss },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "128x128" },
+      { rel: "icon", href: ICON_LG, type: "image/png", sizes: "512x512" },
+      { rel: "apple-touch-icon", href: ICON_LG, sizes: "180x180" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
