@@ -8,20 +8,85 @@ import lakeKivu from '@/assets/lake-kivu.jpg';
 import moonDream from '@/assets/moon-dream.jpg';
 
 export function Star({ className = '' }: { className?: string }) {
-  return <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M30 3 35 23 54 14 41 30 56 42 36 37 30 57 25 37 5 44 19 30 5 15 25 23Z" fill="currentColor" /></svg>;
+  return (
+    <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden="true">
+      <path d="M30 3 35 23 54 14 41 30 56 42 36 37 30 57 25 37 5 44 19 30 5 15 25 23Z" fill="currentColor" />
+    </svg>
+  );
 }
 
 export function Hero() {
-  return <section className="hero page-width">
-    <div className="hero-copy"><div className="eyebrow"><span className="status-dot" /> A BUILDER. A CREATOR. A CURIOUS HUMAN.</div>
-      <h1>Hey, I'm <span className="name-highlight">Aidi<svg viewBox="0 0 220 17" aria-hidden="true"><path d="M5 12Q108 0 212 8M22 16Q115 7 193 13" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" /></svg></span><span className="hello-period">.</span></h1>
-      <h2>I turn "what if"<br />into <span className="serif-word">something real.</span></h2>
-      <p>I'm Amani Ishimwe Didier. I build things for the web, tell stories,<br className="desktop-break" /> and follow my curiosity wherever it takes me.</p>
-      <div className="hero-actions"><Button asChild className="primary-action"><Link to="/work">Explore my work <ArrowUpRight /></Link></Button><Button asChild variant="outline" className="secondary-action"><Link to="/contact">Let's talk <span aria-hidden="true">↗</span></Link></Button></div>
-      <div className="hero-footnote"><span className="mini-spark">✳</span> A little code. A little creativity. A lot of heart.</div>
-    </div>
-    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that's me <span>↴</span></span><div className="portrait-frame"><img src={portraitUrl} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" fetchPriority="high" decoding="async" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
-  </section>;
+  return (
+    <section className="hero page-width">
+      <div className="hero-copy">
+        <div className="eyebrow">
+          <span className="status-dot" /> A BUILDER. A CREATOR. A CURIOUS HUMAN.
+        </div>
+        <h1>
+          Hey, I'm{' '}
+          <span className="name-highlight">
+            Aidi
+            <svg viewBox="0 0 220 17" aria-hidden="true">
+              <path d="M5 12Q108 0 212 8M22 16Q115 7 193 13" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className="hello-period">.</span>
+        </h1>
+        <h2>
+          I turn "what if"
+          <br />
+          into <span className="serif-word">something real.</span>
+        </h2>
+        <p>
+          I'm Amani Ishimwe Didier. I build things for the web, tell stories,
+          <br className="desktop-break" /> and follow my curiosity wherever it takes me.
+        </p>
+        <div className="hero-actions">
+          <Button asChild className="primary-action">
+            <Link to="/work">
+              Explore my work <ArrowUpRight />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="secondary-action">
+            <Link to="/contact">
+              Let's talk <span aria-hidden="true">↗</span>
+            </Link>
+          </Button>
+        </div>
+        <div className="hero-footnote">
+          <span className="mini-spark">✳</span> A little code. A little creativity. A lot of heart.
+        </div>
+      </div>
+      <div className="portrait-composition">
+        <span className="handwritten portrait-note">
+          yep, that's me <span>↴</span>
+        </span>
+        <div className="portrait-frame">
+          <img
+            src={portraitUrl}
+            alt="Amani Didier wearing green headphones, glasses, and a green jacket"
+            width={600}
+            height={600}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+        <Star className="portrait-star" />
+        <div className="builder-sticker">
+          <Code2 />
+          <span>
+            made of
+            <br />
+            <strong>curiosity.</strong>
+          </span>
+        </div>
+        <div className="hello-sticker">
+          hello, world <span>☺</span>
+        </div>
+        <span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span>
+      </div>
+    </section>
+  );
 }
 
 export function ProjectVisual({ visual, large = false }: { visual: string; large?: boolean }) {
@@ -29,18 +94,35 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'bob') {
     return (
-      <div className={`${cls} art-bob`}>
-        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion" loading="lazy" decoding="async" width="160" height="160" />
-        <div className="art-bob-tag">Your friendly <span>AI research</span> companion</div>
+      <div className={cls + ' art-bob'}>
+        <img
+          className="art-bob-char"
+          src={projectPreviews.bob}
+          alt="Bob — friendly AI research companion"
+          loading="lazy"
+          decoding="async"
+          width={160}
+          height={160}
+        />
+        <div className="art-bob-tag">
+          Your friendly <span>AI research</span> companion
+        </div>
       </div>
     );
   }
 
   if (visual === 'stokeyange') {
     return (
-      <div className={`${cls} art-stokeyange`}>
+      <div className={cls + ' art-stokeyange'}>
         <div className="stokeyange-card">
-          <img src={projectPreviews.stokeyange} alt="Stoke Yange app icon" loading="lazy" decoding="async" width="88" height="88" />
+          <img
+            src={projectPreviews.stokeyange}
+            alt="Stoke Yange app icon"
+            loading="lazy"
+            decoding="async"
+            width={88}
+            height={88}
+          />
           <div className="stokeyange-brand">Stoke Yange</div>
           <div className="stokeyange-tagline">Stock · Sell · Amadeni</div>
           <div className="stokeyange-pills">
@@ -57,8 +139,14 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'genie') {
     return (
-      <div className={`${cls} art-genie art-preview`}>
-        <img className="art-preview-img" src={projectPreviews.genie} alt="Genie — Learn AI the fun way" loading="lazy" decoding="async" />
+      <div className={cls + ' art-genie art-preview'}>
+        <img
+          className="art-preview-img"
+          src={projectPreviews.genie}
+          alt="Genie — Learn AI the fun way"
+          loading="lazy"
+          decoding="async"
+        />
         <div className="art-preview-fade" />
         <span className="art-preview-label">Genie · learn AI the fun way</span>
       </div>
@@ -67,15 +155,15 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'urugendo') {
     return (
-      <div className={`${cls} art-urugendo-photo`}>
+      <div className={cls + ' art-urugendo-photo'}>
         <img
           className="art-urugendo-full"
           src={projectPreviews.urugendo}
           alt="Urugendo — Rwanda bus booking product"
           loading="lazy"
           decoding="async"
-          width="800"
-          height="800"
+          width={800}
+          height={800}
         />
       </div>
     );
@@ -83,8 +171,10 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'billy') {
     return (
-      <div className={`${cls} art-billy`}>
-        <div className="project-icon"><YtIcon size={32} /></div>
+      <div className={cls + ' art-billy'}>
+        <div className="project-icon">
+          <YtIcon size={32} />
+        </div>
         <strong>Watch · Point · Ask</strong>
         <span className="mini-project-label">BILLY</span>
         <Star className="small-art-star" />
@@ -94,9 +184,15 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'ict') {
     return (
-      <div className={`${cls} art-ict`}>
-        <div className="project-icon"><GraduationCap size={32} /></div>
-        <strong>Curious students<br />become builders.</strong>
+      <div className={cls + ' art-ict'}>
+        <div className="project-icon">
+          <GraduationCap size={32} />
+        </div>
+        <strong>
+          Curious students
+          <br />
+          become builders.
+        </strong>
         <span className="mini-project-label">ICT CLUB · BYIMANA</span>
         <Star className="small-art-star" />
       </div>
@@ -105,8 +201,10 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'campus') {
     return (
-      <div className={`${cls} art-campus`}>
-        <div className="project-icon"><Users size={32} /></div>
+      <div className={cls + ' art-campus'}>
+        <div className="project-icon">
+          <Users size={32} />
+        </div>
         <strong>Welcome to the gate.</strong>
         <span className="mini-project-label">CAMPUS CHECK-IN</span>
         <Star className="small-art-star" />
@@ -115,74 +213,110 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
   }
 
   return (
-    <div className={`${cls} art-${visual}`}>
+    <div className={cls + ' art-' + visual}>
       <span className="mini-project-label">AIDI / LAB</span>
       <div className="project-icon">
         {visual === 'interview' ? <Mic /> : visual === 'sanipads' ? <Heart /> : visual === 'hotseat' ? <span>🔥</span> : <Code2 />}
       </div>
       <strong>
-        {visual === 'interview' ? 'Your next chapter.' : visual === 'sanipads' ? 'Care, without barriers.' : visual === 'hotseat' ? 'Take the hot seat.' : 'Better, together.'}
+        {visual === 'interview'
+          ? 'Your next chapter.'
+          : visual === 'sanipads'
+            ? 'Care, without barriers.'
+            : visual === 'hotseat'
+              ? 'Take the hot seat.'
+              : 'Better, together.'}
       </strong>
       <Star className="small-art-star" />
     </div>
   );
 }
 
+function repoLink(repo?: string) {
+  if (!repo) return null;
+  if (repo.includes('/')) return 'https://github.com/' + repo;
+  return github + '/' + repo;
+}
+
 export function WorkSection({ full = false }: { full?: boolean }) {
   const [filter, setFilter] = useState('All');
-  const visible = (full ? projects : projects.slice(0, 4)).filter((p) => filter === 'All' || p.category === filter);
+  const list = full ? projects : projects.slice(0, 4);
+  const visible = list.filter((p) => filter === 'All' || p.category === filter);
+
   return (
-    <section className={`work-section page-width ${full ? 'inner-page' : ''`}>
+    <section className={'work-section page-width' + (full ? ' inner-page' : '')}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">01 / MADE WITH CURIOSITY</div>
-          <h2>{full ? "Things I've built" : 'Selected work'}<span className="heading-dot">.</span></h2>
+          <h2>
+            {full ? "Things I've built" : 'Selected work'}
+            <span className="heading-dot">.</span>
+          </h2>
           <p>Ideas that escaped my notes app and became real things.</p>
         </div>
         {!full && (
           <Button asChild variant="ghost" className="text-link">
-            <Link to="/work">All projects <ArrowUpRight /></Link>
+            <Link to="/work">
+              All projects <ArrowUpRight />
+            </Link>
           </Button>
         )}
       </div>
       {full && (
         <div className="filters" aria-label="Filter projects">
           {['All', 'AI & tools', 'Web apps', 'Experiments'].map((f) => (
-            <Button key={f} variant={filter === f ? 'default' : 'ghost'} onClick={() => setFilter(f)}>{f}</Button>
+            <Button key={f} variant={filter === f ? 'default' : 'ghost'} onClick={() => setFilter(f)}>
+              {f}
+            </Button>
           ))}
         </div>
       )}
       <div className="project-grid">
         {visible.map((project) => {
-          const repoUrl = project.repo
-            ? project.repo.includes('/')
-              ? `https://github.com/${project.repo}`
-              : `${github}/${project.repo}`
-            : null;
+          const repoUrl = repoLink(project.repo);
+          const index = projects.findIndex((p) => p.slug === project.slug) + 1;
           return (
             <article className="project-card" key={project.slug}>
-              <Link to="/project/$slug" params={{ slug: project.slug }} className="project-cover-button" aria-label={`View ${project.name} details`}>
+              <Link
+                to="/project/$slug"
+                params={{ slug: project.slug }}
+                className="project-cover-button"
+                aria-label={'View ' + project.name + ' details'}
+              >
                 <ProjectVisual visual={project.visual} />
               </Link>
               <div className="project-info">
                 <div className="project-title-row">
-                  <h3>{project.name}<span className="project-number">0{projects.findIndex((p) => p.slug === project.slug) + 1}</span></h3>
-                  <Button asChild variant="ghost" size="icon" aria-label={`Open ${project.name}`}>
-                    <Link to="/project/$slug" params={{ slug: project.slug }}><ArrowUpRight /></Link>
+                  <h3>
+                    {project.name}
+                    <span className="project-number">0{index}</span>
+                  </h3>
+                  <Button asChild variant="ghost" size="icon" aria-label={'Open ' + project.name}>
+                    <Link to="/project/$slug" params={{ slug: project.slug }}>
+                      <ArrowUpRight />
+                    </Link>
                   </Button>
                 </div>
                 <p>{project.description}</p>
                 <div className="project-bottom">
-                  <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                  <div className="tags">
+                    {project.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
                   <div className="repo-links">
                     {repoUrl && (
                       <Button asChild variant="ghost" size="icon">
-                        <a href={repoUrl} target="_blank" rel="noreferrer" aria-label={`${project.name} GitHub`}><Github /></a>
+                        <a href={repoUrl} target="_blank" rel="noreferrer" aria-label={project.name + ' GitHub'}>
+                          <Github />
+                        </a>
                       </Button>
                     )}
                     {project.live && (
                       <Button asChild variant="ghost" size="icon">
-                        <a href={project.live} target="_blank" rel="noreferrer" aria-label={`Visit ${project.name}`}><ExternalLink /></a>
+                        <a href={project.live} target="_blank" rel="noreferrer" aria-label={'Visit ' + project.name}>
+                          <ExternalLink />
+                        </a>
                       </Button>
                     )}
                   </div>
@@ -202,28 +336,51 @@ export function ContentSection() {
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">02 / BUILDING IN PUBLIC</div>
-          <h2>The story behind the screen<span className="heading-dot">.</span></h2>
+          <h2>
+            The story behind the screen<span className="heading-dot">.</span>
+          </h2>
           <p>The experiments, the little wins, and the "well, that didn't work."</p>
         </div>
         <Button asChild variant="ghost" className="text-link">
-          <a href={youtube} target="_blank" rel="noreferrer">Find me on YouTube <ArrowUpRight /></a>
+          <a href={youtube} target="_blank" rel="noreferrer">
+            Find me on YouTube <ArrowUpRight />
+          </a>
         </Button>
       </div>
       <div className="youtube-feature">
-        <a href={`${youtube}/videos`} target="_blank" rel="noreferrer" className="video-art" aria-label="Explore Aidi's videos on YouTube">
+        <a
+          href={youtube + '/videos'}
+          target="_blank"
+          rel="noreferrer"
+          className="video-art"
+          aria-label="Explore Aidi's videos on YouTube"
+        >
           <div className="video-kicker">THE AIDI EXPERIMENT</div>
-          <div className="video-headline">ONE MONTH.<br />ONE <span>BIG IDEA.</span></div>
-          <img src={avatarUrl} alt="Aidi chipmunk mascot" loading="lazy" decoding="async" width="260" height="260" />
-          <span className="play-button"><Play fill="currentColor" /></span>
+          <div className="video-headline">
+            ONE MONTH.
+            <br />
+            ONE <span>BIG IDEA.</span>
+          </div>
+          <img src={avatarUrl} alt="Aidi chipmunk mascot" loading="lazy" decoding="async" width={260} height={260} />
+          <span className="play-button">
+            <Play fill="currentColor" />
+          </span>
           <Star className="video-star" />
         </a>
         <div className="video-copy">
-          <span className="youtube-label"><Youtube size={17} /> @Aidi</span>
+          <span className="youtube-label">
+            <Youtube size={17} /> @Aidi
+          </span>
           <h3>Can I build a billion dollar company in one month?</h3>
           <p>Big ideas. Real experiments. An honest look at what happens when curiosity meets a deadline.</p>
-          <div className="tags"><span>Tech experiments</span><span>Builder journey</span></div>
+          <div className="tags">
+            <span>Tech experiments</span>
+            <span>Builder journey</span>
+          </div>
           <Button asChild variant="ghost" className="text-link">
-            <a href={`${youtube}/videos`} target="_blank" rel="noreferrer">Explore the channel <ArrowUpRight /></a>
+            <a href={youtube + '/videos'} target="_blank" rel="noreferrer">
+              Explore the channel <ArrowUpRight />
+            </a>
           </Button>
         </div>
       </div>
@@ -240,22 +397,32 @@ const skills = [
 
 export function AboutSection({ full = false }: { full?: boolean }) {
   return (
-    <section className={`about-section page-width ${full ? 'inner-page' : ''`}>
+    <section className={'about-section page-width' + (full ? ' inner-page' : '')}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">03 / MORE THAN A JOB TITLE</div>
-          <h2>Curiosity is my favorite skill<span className="heading-dot">.</span></h2>
+          <h2>
+            Curiosity is my favorite skill<span className="heading-dot">.</span>
+          </h2>
         </div>
         <Star className="about-star" />
       </div>
       <div className="about-copy">
-        <p>I'm Amani Didier, but you can call me Aidi. I'm happiest when I'm making something — a web app, a new logo, a video, or an idea that probably sounded a little crazy at first.</p>
-        <p>I like technology that feels human, design that makes you smile, and learning by doing. Usually with headphones on. Always with a little room for a laugh.</p>
+        <p>
+          I'm Amani Didier, but you can call me Aidi. I'm happiest when I'm making something — a web app, a new logo, a
+          video, or an idea that probably sounded a little crazy at first.
+        </p>
+        <p>
+          I like technology that feels human, design that makes you smile, and learning by doing. Usually with headphones
+          on. Always with a little room for a laugh.
+        </p>
       </div>
       <div className="skill-grid">
         {skills.map((s) => (
           <div className="skill-item" key={s.title}>
-            <span className={`skill-icon ${s.tone}`}><s.icon /></span>
+            <span className={'skill-icon ' + s.tone}>
+              <s.icon />
+            </span>
             <h3>{s.title}</h3>
             <p>{s.note}</p>
           </div>
@@ -263,18 +430,25 @@ export function AboutSection({ full = false }: { full?: boolean }) {
       </div>
       {!full && (
         <Button asChild variant="ghost" className="text-link">
-          <Link to="/about">A little more about me <ArrowUpRight /></Link>
+          <Link to="/about">
+            A little more about me <ArrowUpRight />
+          </Link>
         </Button>
       )}
       {full && (
         <div className="about-extra">
-          <img src={portraitUrl} alt="Aidi with headphones" loading="lazy" decoding="async" width="300" height="300" />
+          <img src={portraitUrl} alt="Aidi with headphones" loading="lazy" decoding="async" width={300} height={300} />
           <div>
             <span className="handwritten">forever a work in progress.</span>
             <h3>Build. Learn. Share. Repeat.</h3>
-            <p>Tech exploration, sharing stories, and sharing laughs. The best part of building is finding people who are just as curious as you are.</p>
+            <p>
+              Tech exploration, sharing stories, and sharing laughs. The best part of building is finding people who are
+              just as curious as you are.
+            </p>
             <Button asChild variant="outline">
-              <a href={github} target="_blank" rel="noreferrer"><Github /> Follow the experiments</a>
+              <a href={github} target="_blank" rel="noreferrer">
+                <Github /> Follow the experiments
+              </a>
             </Button>
           </div>
         </div>
@@ -340,37 +514,46 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
   const visible = adventures.filter((a) => filter === 'All' || a.type === filter);
   const current = visible[active] ?? visible[0];
   if (!current) return null;
+
+  const imageSrc = typeof current.image === 'string' ? current.image : (current.image as string);
+
   return (
-    <section className={`adventure-section page-width ${full ? 'inner-page' : ''`}>
+    <section className={'adventure-section page-width' + (full ? ' inner-page' : '')}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">04 / AWAY FROM THE KEYBOARD</div>
-          <h2>There's a whole world out there<span className="heading-dot">.</span></h2>
+          <h2>
+            There's a whole world out there<span className="heading-dot">.</span>
+          </h2>
           <p>Earth adventures, space-sized dreams, and the little things in between.</p>
         </div>
         {!full && (
           <Button asChild variant="ghost" className="text-link">
-            <Link to="/playground">My playground <ArrowUpRight /></Link>
+            <Link to="/playground">
+              My playground <ArrowUpRight />
+            </Link>
           </Button>
         )}
       </div>
       {full && (
         <div className="filters">
           {['All', 'Earth', 'Dreams', 'Little joys'].map((f) => (
-            <Button key={f} variant={filter === f ? 'default' : 'ghost'} onClick={() => { setFilter(f); setActive(0); }}>{f}</Button>
+            <Button
+              key={f}
+              variant={filter === f ? 'default' : 'ghost'}
+              onClick={() => {
+                setFilter(f);
+                setActive(0);
+              }}
+            >
+              {f}
+            </Button>
           ))}
         </div>
       )}
       <div className="adventure-layout">
         <div className="adventure-image">
-          <img
-            src={typeof current.image === 'string' ? current.image : (current.image as string)}
-            alt={current.title}
-            loading="lazy"
-            decoding="async"
-            width="1200"
-            height="800"
-          />
+          <img src={imageSrc} alt={current.title} loading="lazy" decoding="async" width={1200} height={800} />
           {current.title === 'Musanze mountains' && (
             <img
               className="gorilla-inset"
@@ -378,8 +561,8 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
               alt="Mountain gorilla in Volcanoes National Park, Rwanda"
               loading="lazy"
               decoding="async"
-              width="320"
-              height="240"
+              width={320}
+              height={240}
             />
           )}
           <span className="image-caption">{current.label}</span>
@@ -387,7 +570,15 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
         <div className="adventure-details">
           <div className="adventure-tabs">
             {visible.map((a, i) => (
-              <Button key={a.title} variant={i === active ? 'default' : 'ghost'} size="icon" title={a.title} aria-label={a.title} aria-pressed={i === active} onClick={() => setActive(i)}>
+              <Button
+                key={a.title}
+                variant={i === active ? 'default' : 'ghost'}
+                size="icon"
+                title={a.title}
+                aria-label={a.title}
+                aria-pressed={i === active}
+                onClick={() => setActive(i)}
+              >
                 <a.icon />
               </Button>
             ))}
