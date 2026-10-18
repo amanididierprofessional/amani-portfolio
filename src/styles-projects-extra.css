@@ -1,38 +1,77 @@
 /* Project card brand visuals + minimal detail page */
 
+/* Shared: real screenshot / preview cards */
+.art-preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #111;
+}
+.art-preview-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.art-preview-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%);
+  pointer-events: none;
+}
+.art-preview-label {
+  position: absolute;
+  left: 18px;
+  bottom: 14px;
+  z-index: 2;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  letter-spacing: 0.02em;
+}
+
+/* Stoke Yange — orange brand + product icon */
 .art-stokeyange {
-  background: linear-gradient(145deg, #ea580c 0%, #f97316 60%, #fb923c 100%);
+  background: linear-gradient(145deg, #ea580c 0%, #f97316 55%, #fb923c 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   position: relative;
+  overflow: hidden;
+}
+.art-stokeyange .art-preview-img {
+  object-fit: contain;
+  padding: 12% 18%;
+  background: linear-gradient(145deg, #ea580c 0%, #f97316 55%, #fb923c 100%);
 }
 .stokeyange-card {
   text-align: center;
   background: rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 18px;
-  padding: 32px 36px;
+  padding: 28px 32px;
   backdrop-filter: blur(8px);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
   transform: rotate(-1.5deg);
+  position: relative;
+  z-index: 1;
 }
-.stokeyange-icon-img {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 14px;
-  border-radius: 18px;
-  background: #fff;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-}
-.stokeyange-icon-img img {
-  width: 48px;
-  height: 48px;
+.stokeyange-card img {
+  width: 88px;
+  height: 88px;
   object-fit: contain;
+  margin: 0 auto 12px;
+  display: block;
+  border-radius: 20px;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 .stokeyange-brand {
   font-size: 26px;
@@ -63,26 +102,33 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
+/* Bob — soft cream + real login preview */
 .art-bob {
   background: #f5f5f0;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 }
-.bob-logo-hero {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
+.art-bob .art-preview-img {
+  object-fit: cover;
+  object-position: center center;
 }
-.bob-brand-label {
-  position: absolute;
-  bottom: 18px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.02em;
+
+/* Genie — dark + real OG / panda art */
+.art-genie {
+  background: #0f0f12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+.art-genie .art-preview-img {
+  object-fit: cover;
+  object-position: center center;
 }
 
 .art-urugendo-logo {
@@ -93,19 +139,6 @@
 }
 .urugendo-logo-img {
   max-width: 70%;
-  height: auto;
-  object-fit: contain;
-}
-
-.art-genie {
-  background: #0f0f12;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #f8fafc;
-}
-.genie-logo-img {
-  max-width: 72%;
   height: auto;
   object-fit: contain;
 }
@@ -228,4 +261,12 @@ a.project-cover-button {
   overflow: hidden;
   text-decoration: none;
   color: inherit;
+}
+
+/* Larger site wordmark */
+.wordmark {
+  font-size: 42px !important;
+}
+.wordmark span {
+  font-size: 34px !important;
 }
