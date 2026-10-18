@@ -134,81 +134,21 @@
   object-position: center center;
 }
 
-/* Urugendo — product-style green marketing card (matches your mockup) */
-.art-urugendo-product {
+/* Urugendo — full product mockup from public/2.png */
+.art-urugendo-photo {
   background: #22c55e;
-  display: grid;
-  grid-template-columns: 1fr 1.05fr;
-  align-items: center;
-  gap: 12px;
-  padding: 22px 20px;
   position: relative;
   overflow: hidden;
-  color: #fff;
-}
-.urugendo-product-copy {
-  z-index: 1;
-  padding-left: 6px;
-}
-.urugendo-product-kicker {
-  display: block;
-  font-size: 10px;
-  font-weight: 600;
-  opacity: 0.95;
-  margin-bottom: 8px;
-}
-.urugendo-product-copy h3 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-}
-.urugendo-product-copy h3 span {
-  color: #f97316;
-}
-.urugendo-product-tag {
-  margin: 8px 0 12px;
-  font-family: 'Kalam', cursive;
-  font-size: 14px;
-  color: #fff7ed;
-  font-style: italic;
-}
-.urugendo-product-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #fff;
-  color: #166534;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 999px;
-}
-.urugendo-product-phones {
-  position: relative;
-  height: 100%;
-  min-height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.urugendo-product-phones img {
-  max-height: 92%;
-  max-width: 100%;
-  object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
-  background: #0a0f0c;
-}
-@media (max-width: 520px) {
-  .art-urugendo-product {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .urugendo-product-phones {
-    min-height: 140px;
-  }
+.art-urugendo-full {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 
 .art-billy {
@@ -337,7 +277,7 @@ a.project-cover-button {
   font-size: 34px !important;
 }
 
-/* Gorilla inset on Musanze — do not remove */
+/* Gorilla inset on Musanze — kept */
 .gorilla-inset {
   position: absolute;
   right: 14px;
@@ -351,4 +291,10 @@ a.project-cover-button {
 }
 .adventure-image {
   position: relative;
+}
+.adventure-image > img:first-child {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }

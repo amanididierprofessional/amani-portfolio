@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ArrowUpRight, Github, Youtube, Play, Sparkles, Code2, Mic, Heart, Waves, Plane, Footprints, Mountain, Rocket, ExternalLink, Palette, Film, Box, Search, Store, GraduationCap, Users, Youtube as YtIcon } from 'lucide-react';
+import { ArrowUpRight, Github, Youtube, Play, Code2, Mic, Heart, Waves, Plane, Footprints, Mountain, Rocket, ExternalLink, Palette, Film, Box, GraduationCap, Users, Youtube as YtIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { github, youtube, projects } from '@/lib/portfolio';
 import { portraitUrl, avatarUrl, projectPreviews, adventureImages } from '@/lib/images';
 import lakeKivu from '@/assets/lake-kivu.jpg';
+import moonDream from '@/assets/moon-dream.jpg';
 
 export function Star({ className = '' }: { className?: string }) {
   return <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M30 3 35 23 54 14 41 30 56 42 36 37 30 57 25 37 5 44 19 30 5 15 25 23Z" fill="currentColor" /></svg>;
@@ -19,7 +20,7 @@ export function Hero() {
       <div className="hero-actions"><Button asChild className="primary-action"><Link to="/work">Explore my work <ArrowUpRight /></Link></Button><Button asChild variant="outline" className="secondary-action"><Link to="/contact">Let's talk <span aria-hidden="true">↗</span></Link></Button></div>
       <div className="hero-footnote"><span className="mini-spark">✳</span> A little code. A little creativity. A lot of heart.</div>
     </div>
-    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that's me <span>↴</span></span><div className="portrait-frame"><img src={portraitUrl} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
+    <div className="portrait-composition"><span className="handwritten portrait-note">yep, that's me <span>↴</span></span><div className="portrait-frame"><img src={portraitUrl} alt="Amani Didier wearing green headphones, glasses, and a green jacket" width="600" height="600" fetchPriority="high" decoding="async" /></div><Star className="portrait-star" /><div className="builder-sticker"><Code2 /><span>made of<br /><strong>curiosity.</strong></span></div><div className="hello-sticker">hello, world <span>☺</span></div><span className="portrait-caption">AMANI ISHIMWE DIDIER / MOST PEOPLE CALL ME AIDI</span></div>
   </section>;
 }
 
@@ -29,7 +30,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
   if (visual === 'bob') {
     return (
       <div className={`${cls} art-bob`}>
-        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion" loading="lazy" />
+        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion" loading="lazy" decoding="async" width="160" height="160" />
         <div className="art-bob-tag">Your friendly <span>AI research</span> companion</div>
       </div>
     );
@@ -39,7 +40,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
     return (
       <div className={`${cls} art-stokeyange`}>
         <div className="stokeyange-card">
-          <img src={projectPreviews.stokeyange} alt="Stoke Yange app icon" loading="lazy" />
+          <img src={projectPreviews.stokeyange} alt="Stoke Yange app icon" loading="lazy" decoding="async" width="88" height="88" />
           <div className="stokeyange-brand">Stoke Yange</div>
           <div className="stokeyange-tagline">Stock · Sell · Amadeni</div>
           <div className="stokeyange-pills">
@@ -57,7 +58,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
   if (visual === 'genie') {
     return (
       <div className={`${cls} art-genie art-preview`}>
-        <img className="art-preview-img" src={projectPreviews.genie} alt="Genie — Learn AI the fun way" loading="lazy" />
+        <img className="art-preview-img" src={projectPreviews.genie} alt="Genie — Learn AI the fun way" loading="lazy" decoding="async" />
         <div className="art-preview-fade" />
         <span className="art-preview-label">Genie · learn AI the fun way</span>
       </div>
@@ -66,16 +67,16 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'urugendo') {
     return (
-      <div className={`${cls} art-urugendo-product`}>
-        <div className="urugendo-product-copy">
-          <span className="urugendo-product-kicker">Rwanda · Ride everywhere easily</span>
-          <h3>Urugendo<span>.</span></h3>
-          <p className="urugendo-product-tag">Find your next journey</p>
-          <span className="urugendo-product-pill">Made for You</span>
-        </div>
-        <div className="urugendo-product-phones">
-          <img src={projectPreviews.urugendoScreen} alt="Urugendo app screens" loading="lazy" />
-        </div>
+      <div className={`${cls} art-urugendo-photo`}>
+        <img
+          className="art-urugendo-full"
+          src={projectPreviews.urugendo}
+          alt="Urugendo — Rwanda bus booking product"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="800"
+        />
       </div>
     );
   }
@@ -212,7 +213,7 @@ export function ContentSection() {
         <a href={`${youtube}/videos`} target="_blank" rel="noreferrer" className="video-art" aria-label="Explore Aidi's videos on YouTube">
           <div className="video-kicker">THE AIDI EXPERIMENT</div>
           <div className="video-headline">ONE MONTH.<br />ONE <span>BIG IDEA.</span></div>
-          <img src={avatarUrl} alt="Aidi chipmunk mascot" loading="lazy" width="260" height="260" />
+          <img src={avatarUrl} alt="Aidi chipmunk mascot" loading="lazy" decoding="async" width="260" height="260" />
           <span className="play-button"><Play fill="currentColor" /></span>
           <Star className="video-star" />
         </a>
@@ -267,7 +268,7 @@ export function AboutSection({ full = false }: { full?: boolean }) {
       )}
       {full && (
         <div className="about-extra">
-          <img src={portraitUrl} alt="Aidi with headphones" loading="lazy" width="300" height="300" />
+          <img src={portraitUrl} alt="Aidi with headphones" loading="lazy" decoding="async" width="300" height="300" />
           <div>
             <span className="handwritten">forever a work in progress.</span>
             <h3>Build. Learn. Share. Repeat.</h3>
@@ -283,12 +284,54 @@ export function AboutSection({ full = false }: { full?: boolean }) {
 }
 
 const adventures = [
-  { title: 'By the water', icon: Waves, image: lakeKivu, note: "A lake, an ocean, a quiet shore. There's something about water that makes everything feel a little lighter.", label: 'MY HAPPY PLACE', type: 'Earth' },
-  { title: 'To the moon & Mars', icon: Rocket, image: adventureImages.moon, note: 'Still on the dream list. One day, a different kind of adventure — a little further from home.', label: 'ON THE DREAM LIST', type: 'Dreams' },
-  { title: 'Musanze mountains', icon: Mountain, image: adventureImages.mountains, note: "Rwanda's mountains and the incredible mountain gorillas of Musanze. Nature at its most extraordinary.", label: 'RWANDA, WITH LOVE', type: 'Earth' },
-  { title: 'Above the clouds', icon: Plane, image: adventureImages.airplane, note: 'Window seat, always. I love that moment when the world turns into a patchwork far below.', label: 'A DIFFERENT PERSPECTIVE', type: 'Dreams' },
-  { title: 'One more kilometer', icon: Footprints, image: adventureImages.running, note: 'A run, a clear head, and a little more energy for whatever comes next.', label: 'KEEP MOVING', type: 'Little joys' },
-  { title: 'Life has a soundtrack', icon: Mic, image: adventureImages.music, note: 'Singing, headphones on, and sharing a laugh. Some of the best moments need no big plan.', label: 'THE LITTLE THINGS', type: 'Little joys' },
+  {
+    title: 'By the water',
+    icon: Waves,
+    image: lakeKivu,
+    note: "A lake, an ocean, a quiet shore. There's something about water that makes everything feel a little lighter.",
+    label: 'MY HAPPY PLACE',
+    type: 'Earth',
+  },
+  {
+    title: 'To the moon & Mars',
+    icon: Rocket,
+    image: moonDream,
+    note: 'Still on the dream list. One day, a different kind of adventure — a little further from home.',
+    label: 'ON THE DREAM LIST',
+    type: 'Dreams',
+  },
+  {
+    title: 'Musanze mountains',
+    icon: Mountain,
+    image: adventureImages.mountains,
+    note: "Rwanda's mountains and the incredible mountain gorillas of Musanze. Nature at its most extraordinary.",
+    label: 'RWANDA, WITH LOVE',
+    type: 'Earth',
+  },
+  {
+    title: 'Above the clouds',
+    icon: Plane,
+    image: adventureImages.airplane,
+    note: 'Window seat, always. I love that moment when the world turns into a patchwork far below.',
+    label: 'A DIFFERENT PERSPECTIVE',
+    type: 'Dreams',
+  },
+  {
+    title: 'One more kilometer',
+    icon: Footprints,
+    image: adventureImages.running,
+    note: 'A run, a clear head, and a little more energy for whatever comes next.',
+    label: 'KEEP MOVING',
+    type: 'Little joys',
+  },
+  {
+    title: 'Life has a soundtrack',
+    icon: Mic,
+    image: adventureImages.music,
+    note: 'Singing, headphones on, and sharing a laugh. Some of the best moments need no big plan.',
+    label: 'THE LITTLE THINGS',
+    type: 'Little joys',
+  },
 ];
 
 export function AdventuresSection({ full = false }: { full?: boolean }) {
@@ -320,9 +363,24 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
       )}
       <div className="adventure-layout">
         <div className="adventure-image">
-          <img src={typeof current.image === 'string' ? current.image : (current.image as string)} alt={current.title} loading="lazy" width="1200" height="800" />
+          <img
+            src={typeof current.image === 'string' ? current.image : (current.image as string)}
+            alt={current.title}
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="800"
+          />
           {current.title === 'Musanze mountains' && (
-            <img className="gorilla-inset" src={adventureImages.gorilla} alt="Mountain gorilla in Volcanoes National Park, Rwanda" loading="lazy" width="320" height="240" />
+            <img
+              className="gorilla-inset"
+              src={adventureImages.gorilla}
+              alt="Mountain gorilla in Volcanoes National Park, Rwanda"
+              loading="lazy"
+              decoding="async"
+              width="320"
+              height="240"
+            />
           )}
           <span className="image-caption">{current.label}</span>
         </div>
