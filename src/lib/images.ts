@@ -20,16 +20,16 @@ export const projectPreviews = {
   /** Stoke Yange app icon remains the clean brand mark */
   stokeyange: 'https://stoke-yange.vercel.app/icon-512.png',
   /** Urugendo splash screen, shown inside the phone frame */
-  urugendoIcon: 'https://image.thum.io/get/width/430/crop/900/noanimate/https://urugendo-v0.vercel.app/',
+  urugendoIcon: 'https://image.thum.io/get/width/390/crop/844/noanimate/https://urugendo-v0.vercel.app/',
 } as const;
 
 /** Distinct, high-quality photos for every Adventures tab. */
 export const adventureImages = {
-  water: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1200&q=78&fit=crop',
+  water: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1200&q=80',
   moon: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1200&q=78&fit=crop',
-  mountains: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80&fit=crop',
+  mountains: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80',
   gorilla: 'https://commons.wikimedia.org/wiki/Special:FilePath/A%20mountain%20gorilla%20from%20Susa%20Group%20in%20Karisimbi%20thicket%20of%20Volcanoes%20National%20Park%20in%20Rwanda.%20Emmanuel%20Kwizera.jpg?width=800',
   airplane: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80&fit=crop',
-  running: 'https://images.unsplash.com/photo-1581889470536-467bdbe30cd0?auto=format&fit=crop&w=1400&q=78',
+  running: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sunny%20road%20through%20nature%20%28Unsplash%29.jpg?width=1400',
   music: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1400&q=80&fit=crop',
 } as const;
