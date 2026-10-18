@@ -20,16 +20,16 @@ export const projectPreviews = {
   /** Stoke Yange app icon remains the clean brand mark */
   stokeyange: 'https://stoke-yange.vercel.app/icon-512.png',
   /** Urugendo splash screen, shown inside the phone frame */
-  urugendoIcon: 'https://image.thum.io/get/width/360/crop/720/noanimate/https://urugendo-v0.vercel.app/splash',
+  urugendoIcon: 'https://image.thum.io/get/width/430/crop/900/noanimate/https://urugendo-v0.vercel.app/',
 } as const;
 
 /** Distinct, high-quality photos for every Adventures tab. */
 export const adventureImages = {
-  water: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1600&q=85&fit=crop',
-  moon: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1600&q=85&fit=crop',
-  mountains: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sabyinyo%20volcanoe%20view%20from%20Kinigi%20sector%2C%20Musanze%20district%2C%20Rwanda.jpg?width=1800',
+  water: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1200&q=78&fit=crop',
+  moon: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1200&q=78&fit=crop',
+  mountains: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80&fit=crop',
   gorilla: 'https://commons.wikimedia.org/wiki/Special:FilePath/A%20mountain%20gorilla%20from%20Susa%20Group%20in%20Karisimbi%20thicket%20of%20Volcanoes%20National%20Park%20in%20Rwanda.%20Emmanuel%20Kwizera.jpg?width=800',
-  airplane: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=2000&q=90&fit=crop',
-  running: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=2000&q=90&fit=crop',
-  music: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=2000&q=90&fit=crop',
+  airplane: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80&fit=crop',
+  running: 'https://images.unsplash.com/photo-1581889470536-467bdbe30cd0?auto=format&fit=crop&w=1400&q=78',
+  music: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1400&q=80&fit=crop',
 } as const;
