@@ -4,6 +4,7 @@ import { ArrowUpRight, Github, Youtube, Play, Sparkles, Code2, Mic, Heart, Waves
 import { Button } from '@/components/ui/button';
 import { github, youtube, projects } from '@/lib/portfolio';
 import { portraitUrl, avatarUrl, projectPreviews, adventureImages } from '@/lib/images';
+import lakeKivu from '@/assets/lake-kivu.jpg';
 
 export function Star({ className = '' }: { className?: string }) {
   return <svg className={className} viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M30 3 35 23 54 14 41 30 56 42 36 37 30 57 25 37 5 44 19 30 5 15 25 23Z" fill="currentColor" /></svg>;
@@ -27,9 +28,9 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'bob') {
     return (
-      <div className={`${cls} art-bob art-live-preview`}>
-        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion website preview" loading="lazy" />
-        <span className="live-preview-caption">BOB · YOUR FRIENDLY AI RESEARCH COMPANION</span>
+      <div className={`${cls} art-bob`}>
+        <img className="art-bob-char" src={projectPreviews.bob} alt="Bob — friendly AI research companion" loading="lazy" />
+        <div className="art-bob-tag">Your friendly <span>AI research</span> companion</div>
       </div>
     );
   }
@@ -65,14 +66,16 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
 
   if (visual === 'urugendo') {
     return (
-      <div className={`${cls} art-urugendo`}>
-        <div className="urugendo-copy">
-          <span className="urugendo-eyebrow">RWANDA, ONE RIDE AT A TIME</span>
-          <strong>Urugendo<span>.</span></strong>
-          <p>Find your next journey.</p>
-          <span className="urugendo-sticker"><Waves size={12} /> Made for the road</span>
+      <div className={`${cls} art-urugendo-product`}>
+        <div className="urugendo-product-copy">
+          <span className="urugendo-product-kicker">Rwanda · Ride everywhere easily</span>
+          <h3>Urugendo<span>.</span></h3>
+          <p className="urugendo-product-tag">Find your next journey</p>
+          <span className="urugendo-product-pill">Made for You</span>
         </div>
-        <img className="urugendo-screen" src={projectPreviews.urugendoIcon} alt="Urugendo app mobile screen preview" loading="lazy" />
+        <div className="urugendo-product-phones">
+          <img src={projectPreviews.urugendoScreen} alt="Urugendo app screens" loading="lazy" />
+        </div>
       </div>
     );
   }
@@ -128,7 +131,7 @@ export function WorkSection({ full = false }: { full?: boolean }) {
   const [filter, setFilter] = useState('All');
   const visible = (full ? projects : projects.slice(0, 4)).filter((p) => filter === 'All' || p.category === filter);
   return (
-    <section className={`work-section page-width ${full ? 'inner-page' : ''}`}>
+    <section className={`work-section page-width ${full ? 'inner-page' : ''`}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">01 / MADE WITH CURIOSITY</div>
@@ -236,7 +239,7 @@ const skills = [
 
 export function AboutSection({ full = false }: { full?: boolean }) {
   return (
-    <section className={`about-section page-width ${full ? 'inner-page' : ''}`}>
+    <section className={`about-section page-width ${full ? 'inner-page' : ''`}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">03 / MORE THAN A JOB TITLE</div>
@@ -280,7 +283,7 @@ export function AboutSection({ full = false }: { full?: boolean }) {
 }
 
 const adventures = [
-  { title: 'By the water', icon: Waves, image: adventureImages.water, note: "A lake, an ocean, a quiet shore. There's something about water that makes everything feel a little lighter.", label: 'MY HAPPY PLACE', type: 'Earth' },
+  { title: 'By the water', icon: Waves, image: lakeKivu, note: "A lake, an ocean, a quiet shore. There's something about water that makes everything feel a little lighter.", label: 'MY HAPPY PLACE', type: 'Earth' },
   { title: 'To the moon & Mars', icon: Rocket, image: adventureImages.moon, note: 'Still on the dream list. One day, a different kind of adventure — a little further from home.', label: 'ON THE DREAM LIST', type: 'Dreams' },
   { title: 'Musanze mountains', icon: Mountain, image: adventureImages.mountains, note: "Rwanda's mountains and the incredible mountain gorillas of Musanze. Nature at its most extraordinary.", label: 'RWANDA, WITH LOVE', type: 'Earth' },
   { title: 'Above the clouds', icon: Plane, image: adventureImages.airplane, note: 'Window seat, always. I love that moment when the world turns into a patchwork far below.', label: 'A DIFFERENT PERSPECTIVE', type: 'Dreams' },
@@ -295,7 +298,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
   const current = visible[active] ?? visible[0];
   if (!current) return null;
   return (
-    <section className={`adventure-section page-width ${full ? 'inner-page' : ''}`}>
+    <section className={`adventure-section page-width ${full ? 'inner-page' : ''`}>
       <div className="section-heading">
         <div>
           <div className="eyebrow muted-eyebrow">04 / AWAY FROM THE KEYBOARD</div>
@@ -317,8 +320,10 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
       )}
       <div className="adventure-layout">
         <div className="adventure-image">
-          <img src={current.image} alt={current.title} loading="lazy" width="1200" height="800" />
-          {current.title === 'Musanze mountains' && <img className="gorilla-inset" src={adventureImages.gorilla} alt="Mountain gorilla in Volcanoes National Park, Rwanda" loading="lazy" width="320" height="240" />}
+          <img src={typeof current.image === 'string' ? current.image : (current.image as string)} alt={current.title} loading="lazy" width="1200" height="800" />
+          {current.title === 'Musanze mountains' && (
+            <img className="gorilla-inset" src={adventureImages.gorilla} alt="Mountain gorilla in Volcanoes National Park, Rwanda" loading="lazy" width="320" height="240" />
+          )}
           <span className="image-caption">{current.label}</span>
         </div>
         <div className="adventure-details">
