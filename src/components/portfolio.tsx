@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowUpRight, Github, Youtube, Play, Sparkles, Code2, Mic, Heart, Waves, Plane, Footprints, Mountain, Rocket, ExternalLink, Palette, Film, Box, Search, Store, GraduationCap, Users, Youtube as YtIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { github, youtube, projects } from '@/lib/portfolio';
-import { portraitUrl, avatarUrl } from '@/lib/images';
+import { portraitUrl, avatarUrl, projectPreviews } from '@/lib/images';
 import lake from '@/assets/lake-kivu.jpg';
 import moon from '@/assets/moon-dream.jpg';
 
@@ -26,23 +26,56 @@ export function Hero() {
 
 export function ProjectVisual({ visual, large = false }: { visual: string; large?: boolean }) {
   const cls = large ? 'project-art project-art-large' : 'project-art';
+
   if (visual === 'bob') {
     return (
-      <div className={`${cls} art-bob`}>
-        <div className="bob-window">
-          <div className="window-nav">
-            <span className="bob-logo">b<span>o</span>b<span className="logo-dot">.</span></span>
-            <span>Your curious companion <Sparkles size={12} /></span>
-          </div>
-          <div className="bob-title">Big questions.<br /><span>Better discoveries.</span></div>
-          <div className="bob-search"><Search size={13} /> What are you curious about? <span>↗</span></div>
-          <div className="bob-topics"><span>Explore an idea</span><span>Connect the dots</span><span>Go deeper</span></div>
-        </div>
-        <span className="art-note">A friend for your big ideas.</span>
-        <Star className="bob-star" />
+      <div className={`${cls} art-bob art-preview`}>
+        <img
+          className="art-preview-img"
+          src={projectPreviews.bob}
+          alt="Bob — AI research companion landing preview"
+          loading="lazy"
+        />
+        <div className="art-preview-fade" />
+        <span className="art-preview-label">Bob · research companion</span>
       </div>
     );
   }
+
+  if (visual === 'stokeyange') {
+    return (
+      <div className={`${cls} art-stokeyange`}>
+        <div className="stokeyange-card">
+          <img src={projectPreviews.stokeyange} alt="Stoke Yange app icon" loading="lazy" />
+          <div className="stokeyange-brand">Stoke Yange</div>
+          <div className="stokeyange-tagline">Stock · Sell · Amadeni</div>
+          <div className="stokeyange-pills">
+            <span>Offline-first</span>
+            <span>Kinyarwanda</span>
+            <span>POS</span>
+          </div>
+        </div>
+        <span className="art-note stokeyange-note">For shops in Musanze & beyond.</span>
+        <Star className="bob-star" style={{ color: '#fff' }} />
+      </div>
+    );
+  }
+
+  if (visual === 'genie') {
+    return (
+      <div className={`${cls} art-genie art-preview`}>
+        <img
+          className="art-preview-img"
+          src={projectPreviews.genie}
+          alt="Genie — Learn AI the fun way"
+          loading="lazy"
+        />
+        <div className="art-preview-fade" />
+        <span className="art-preview-label">Genie · learn AI the fun way</span>
+      </div>
+    );
+  }
+
   if (visual === 'urugendo') {
     return (
       <div className={`${cls} art-urugendo`}>
@@ -56,33 +89,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
       </div>
     );
   }
-  if (visual === 'stokeyange') {
-    return (
-      <div className={`${cls} art-stokeyange`}>
-        <div className="stokeyange-card">
-          <div className="stokeyange-icon"><Store size={36} strokeWidth={1.8} /></div>
-          <div className="stokeyange-brand">Stoke Yange</div>
-          <div className="stokeyange-tagline">Stock · Sell · Amadeni</div>
-          <div className="stokeyange-pills"><span>Offline-first</span><span>Kinyarwanda</span><span>POS</span></div>
-        </div>
-        <span className="art-note stokeyange-note">For shops in Musanze & beyond.</span>
-        <Star className="bob-star" style={{ color: '#fff' }} />
-      </div>
-    );
-  }
-  if (visual === 'genie') {
-    return (
-      <div className={`${cls} art-genie`}>
-        <div className="genie-inner">
-          <div className="genie-panda">🐼</div>
-          <div className="genie-brand">Genie</div>
-          <div className="genie-tagline">Learn AI the fun way</div>
-        </div>
-        <span className="art-note">Magic that teaches.</span>
-        <Star className="bob-star" />
-      </div>
-    );
-  }
+
   if (visual === 'billy') {
     return (
       <div className={`${cls} art-billy`}>
@@ -93,6 +100,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
       </div>
     );
   }
+
   if (visual === 'ict') {
     return (
       <div className={`${cls} art-ict`}>
@@ -103,6 +111,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
       </div>
     );
   }
+
   if (visual === 'campus') {
     return (
       <div className={`${cls} art-campus`}>
@@ -113,6 +122,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
       </div>
     );
   }
+
   return (
     <div className={`${cls} art-${visual}`}>
       <span className="mini-project-label">AIDI / LAB</span>

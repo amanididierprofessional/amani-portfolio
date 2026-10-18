@@ -41,8 +41,8 @@ export const projects: Project[] = [
     description: 'The friend that makes your research work easier.',
     detail:
       'An AI-powered research companion for following your curiosity, connecting ideas, and making sense of it all. Ask big questions, explore, connect the dots, and go deeper — Bob is built to be a friendly co-pilot for thinking.',
-    repo: 'build-bob-research-application',
-    live: '',
+    repo: 'amanididier/build-bob-research-application',
+    live: 'https://build-bob-research-application.vercel.app',
     tags: ['AI-powered', 'TypeScript'],
     visual: 'bob',
     created: '2026-09-02',
@@ -157,5 +157,4 @@ export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
 }
 
-/** Re-export strong SEO pageHead (name + project keywords built in). */
 export { pageHead } from '@/lib/seo';
