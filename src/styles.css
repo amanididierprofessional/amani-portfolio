@@ -302,16 +302,22 @@ button, a { touch-action: manipulation; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 
 
-/* Project preview refinements: show real product pages cleanly. */
+/* Project previews: keep live product images crisp without extra nested mockups. */
 .art-live-preview { background: #101b1a; }
 .art-live-preview .art-bob-char { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
 .live-preview-caption { position: absolute; z-index: 2; inset: auto 0 0; padding: 24px 18px 11px; color: white; font-size: 9px; font-weight: 700; letter-spacing: 1.1px; background: linear-gradient(transparent, rgb(7 13 16 / 82%)); }
 .art-preview-img { object-fit: cover; object-position: center top; }
-.art-urugendo { padding: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #344b49 0%, #13221f 58%, #0a1512 100%); }
-.urugendo-frame { position: relative; z-index: 1; height: 94%; width: auto; max-width: 42%; aspect-ratio: 292 / 562; overflow: hidden; border: 5px solid #202525; border-radius: 25px; background: #10201b; box-shadow: 0 14px 38px rgb(0 0 0 / 38%), 0 0 0 1px rgb(255 255 255 / 12%); }
+.art-urugendo { padding: 18px 22px 18px 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #c9f4df; color: #113d2b; }
+.urugendo-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 9px; position: relative; z-index: 2; }
+.urugendo-eyebrow { font-size: 7px; line-height: 1.4; letter-spacing: 1.1px; font-weight: 800; color: #267753; }
+.urugendo-copy strong { font-size: clamp(23px, 3vw, 38px); letter-spacing: -1.4px; line-height: 1; font-weight: 850; }
+.urugendo-copy strong span { color: #00a85a; }
+.urugendo-copy p { margin: 0; font-size: 10px; line-height: 1.5; color: #376650; }
+.urugendo-sticker { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; background: #effcf5; border: 1px solid rgb(17 61 43 / 10%); border-radius: 999px; color: #267753; font-size: 8px; font-weight: 700; box-shadow: 0 3px 9px rgb(17 61 43 / 7%); transform: rotate(-3deg); }
+.urugendo-frame { position: relative; z-index: 1; flex: 0 0 auto; height: 98%; width: auto; max-width: 48%; aspect-ratio: 292 / 562; overflow: hidden; border: 5px solid #202525; border-radius: 25px; background: #10201b; box-shadow: 0 8px 18px rgb(17 61 43 / 20%), 0 0 0 1px rgb(255 255 255 / 70%); }
 .urugendo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-.urugendo-caption { position: absolute; z-index: 2; bottom: 10px; left: 12px; color: rgb(255 255 255 / 82%); font-size: 9px; letter-spacing: .5px; }
-@media (max-width: 760px) { .urugendo-frame { height: 92%; max-width: 46%; } .live-preview-caption { font-size: 8px; } }
+@media (max-width: 1100px) { .art-urugendo { padding-inline: 20px; }.urugendo-eyebrow { font-size: 6px; }.urugendo-copy strong { font-size: 27px; } }
+@media (max-width: 760px) { .art-urugendo { padding: 13px 16px; gap: 8px; }.urugendo-frame { height: 96%; max-width: 47%; border-width: 4px; border-radius: 21px; }.urugendo-copy { gap: 7px; }.urugendo-copy strong { font-size: 25px; }.urugendo-copy p { font-size: 9px; }.urugendo-sticker { font-size: 7px; padding: 5px 7px; }.urugendo-eyebrow { font-size: 5.5px; letter-spacing: .6px; }}
 
 /* Musanze: pair the real Virunga landscape with a small gorilla detail. */
 .adventure-image .gorilla-inset { position: absolute; right: 14px; bottom: 14px; width: clamp(88px, 22%, 190px); height: auto; aspect-ratio: 4 / 3; object-fit: cover; border: 3px solid var(--paper); border-radius: 7px; box-shadow: 0 6px 24px rgb(0 0 0 / 28%); }
