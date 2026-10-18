@@ -72,9 +72,7 @@ export function ProjectVisual({ visual, large = false }: { visual: string; large
           <p>Find your next journey.</p>
           <span className="urugendo-sticker"><Waves size={12} /> Made for the road</span>
         </div>
-        <div className="urugendo-frame">
-          <img src={projectPreviews.urugendoIcon} alt="Urugendo bus-booking app shown on a phone screen" loading="lazy" />
-        </div>
+        <img className="urugendo-screen" src={projectPreviews.urugendoIcon} alt="Urugendo app mobile screen preview" loading="lazy" />
       </div>
     );
   }
