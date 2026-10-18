@@ -33,32 +33,14 @@
   text-shadow: 0 1px 6px rgba(0,0,0,0.45);
 }
 
-/* Bob */
+/* Bob — original soft-green window card (restored) */
 .art-bob {
-  background: #fafaf7;
+  background: var(--soft-green);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  gap: 10px;
   overflow: hidden;
-}
-.art-bob-char {
-  width: min(42%, 160px);
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.12));
-  z-index: 1;
-}
-.art-bob-tag {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ink);
-  z-index: 1;
-}
-.art-bob-tag span {
-  color: #2563eb;
 }
 
 /* Stoke Yange */
@@ -120,18 +102,34 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-/* Genie */
+/* Genie — original dark panda card (restored) */
 .art-genie {
-  background: #0b0d12;
+  background: #0f0f12;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  color: #f8fafc;
 }
-.art-genie .art-preview-img {
-  object-fit: cover;
-  object-position: center center;
+.genie-inner {
+  text-align: center;
+  z-index: 1;
+}
+.genie-panda {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.genie-brand {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.genie-tagline {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: 4px;
 }
 
 /* Urugendo — full product mockup from public/2.png */
