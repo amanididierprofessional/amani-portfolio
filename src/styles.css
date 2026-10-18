@@ -300,3 +300,15 @@ button, a { touch-action: manipulation; }
 }
 @media (max-width: 360px) { .hero h1 { font-size: 43px; }.hero h2 { font-size: 28px; }.portrait-composition { width: 250px; }.builder-sticker { right: -2px; }.header-actions { gap: 1px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+
+
+/* Project preview refinements: show real product pages cleanly. */
+.art-live-preview { background: #101b1a; }
+.art-live-preview .art-bob-char { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.live-preview-caption { position: absolute; z-index: 2; inset: auto 0 0; padding: 24px 18px 11px; color: white; font-size: 9px; font-weight: 700; letter-spacing: 1.1px; background: linear-gradient(transparent, rgb(7 13 16 / 82%)); }
+.art-preview-img { object-fit: cover; object-position: center top; }
+.art-urugendo { padding: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #344b49 0%, #13221f 58%, #0a1512 100%); }
+.urugendo-frame { position: relative; z-index: 1; height: 94%; width: auto; max-width: 42%; aspect-ratio: 292 / 562; overflow: hidden; border: 5px solid #202525; border-radius: 25px; background: #10201b; box-shadow: 0 14px 38px rgb(0 0 0 / 38%), 0 0 0 1px rgb(255 255 255 / 12%); }
+.urugendo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.urugendo-caption { position: absolute; z-index: 2; bottom: 10px; left: 12px; color: rgb(255 255 255 / 82%); font-size: 9px; letter-spacing: .5px; }
+@media (max-width: 760px) { .urugendo-frame { height: 92%; max-width: 46%; } .live-preview-caption { font-size: 8px; } }
