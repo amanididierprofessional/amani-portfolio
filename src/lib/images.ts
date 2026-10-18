@@ -27,8 +27,8 @@ export const projectPreviews = {
 export const adventureImages = {
   water: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1600&q=85&fit=crop',
   moon: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1600&q=85&fit=crop',
-  mountains: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=85&fit=crop',
-  airplane: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=85&fit=crop',
-  running: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1600&q=85&fit=crop',
-  music: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1600&q=85&fit=crop',
+  mountains: 'https://commons.wikimedia.org/wiki/Special:FilePath/A%20mountain%20gorilla%20from%20Susa%20Group%20in%20Karisimbi%20thicket%20of%20Volcanoes%20National%20Park%20in%20Rwanda.%20Emmanuel%20Kwizera.jpg?width=1600',
+  airplane: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=2000&q=90&fit=crop',
+  running: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=2000&q=90&fit=crop',
+  music: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=2000&q=90&fit=crop',
 } as const;
