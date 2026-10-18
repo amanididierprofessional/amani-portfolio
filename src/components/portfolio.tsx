@@ -315,6 +315,7 @@ export function AdventuresSection({ full = false }: { full?: boolean }) {
       <div className="adventure-layout">
         <div className="adventure-image">
           <img src={current.image} alt={current.title} loading="lazy" width="1200" height="800" />
+          {current.title === 'Musanze mountains' && <img className="gorilla-inset" src={adventureImages.gorilla} alt="Mountain gorilla in Volcanoes National Park, Rwanda" loading="lazy" width="320" height="240" />}
           <span className="image-caption">{current.label}</span>
         </div>
         <div className="adventure-details">
