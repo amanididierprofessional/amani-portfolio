@@ -110,7 +110,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: projectExtraCss },
       { rel: "stylesheet", href: contactCss },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "icon", href: "https://amani-didier.vercel.app/favicon.png", type: "image/png", sizes: "128x128" },
+      { rel: "shortcut icon", href: "https://amani-didier.vercel.app/favicon.png", type: "image/png", sizes: "128x128" },
 
       { rel: "apple-touch-icon", href: ICON_LG, sizes: "180x180" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
