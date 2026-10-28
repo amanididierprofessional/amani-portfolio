@@ -13,9 +13,11 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import projectExtraCss from "../styles-projects-extra.css?url";
 import contactCss from "../styles-contact.css?url";
+import kidCss from "../styles-kid.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from '@/components/site-shell';
 import { SeoJsonLd } from '@/components/seo-jsonld';
+import { KidAssistant } from '@/components/kid-assistant';
 import { DEFAULT_DESCRIPTION, SEO_KEYWORDS, SITE_NAME, SITE_URL } from '@/lib/seo';
 
 const ICON_LG =
@@ -110,6 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: projectExtraCss },
       { rel: "stylesheet", href: contactCss },
+      { rel: "stylesheet", href: kidCss },
       { rel: "icon", href: "https://amani-didier.vercel.app/favicon.png", type: "image/png", sizes: "128x128" },
       { rel: "shortcut icon", href: "https://amani-didier.vercel.app/favicon.png", type: "image/png", sizes: "128x128" },
 
@@ -153,6 +156,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <SiteFooter />
+      <KidAssistant />
     </QueryClientProvider>
   );
 }
