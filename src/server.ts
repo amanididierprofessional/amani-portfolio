@@ -7,6 +7,7 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 type RuntimeEnv = { GEMINI_API_KEY?: string };
+const tokenRequestWindows = new Map<string, { start: number; count: number }>();
 
 const SYSTEM_INSTRUCTION = [
   "You are Kid, the friendly, natural-sounding voice guide on Amani Ishimwe Didier's personal portfolio website.",
@@ -32,7 +33,17 @@ function jsonResponse(body: unknown, status = 200) {
 async function handleKidToken(request: Request, env: unknown): Promise<Response> {
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed." }, 405);
   const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) return jsonResponse({ error: "Request origin is not allowed." }, 403);
+  if (!origin || origin !== new URL(request.url).origin) return jsonResponse({ error: "Request origin is not allowed." }, 403);
+  // Best-effort per-instance throttling; production traffic can be distributed across serverless instances.
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const nowForLimit = Date.now();
+  const previous = tokenRequestWindows.get(ip);
+  if (!previous || nowForLimit - previous.start >= 60_000) tokenRequestWindows.set(ip, { start: nowForLimit, count: 1 });
+  else if (previous.count >= 8) return jsonResponse({ error: "Too many attempts. Wait a minute and try again." }, 429);
+  else previous.count += 1;
+  if (tokenRequestWindows.size > 1000) {
+    for (const [key, window] of tokenRequestWindows) if (nowForLimit - window.start >= 60_000) tokenRequestWindows.delete(key);
+  }
 
   const runtimeEnv = (env && typeof env === "object" ? env : {}) as RuntimeEnv;
   const processEnv = typeof process !== "undefined" ? process.env : undefined;
