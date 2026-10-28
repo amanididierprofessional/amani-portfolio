@@ -139,15 +139,16 @@ export function KidAssistant() {
           finish(cause instanceof Error ? cause : new Error("Could not send the Gemini session setup."));
         }
       });
-      socket.addEventListener("message", event => {
-        if (typeof event.data !== "string") return;
+      socket.addEventListener("message", async event => {
         try {
-          const packet = JSON.parse(event.data) as { error?: { message?: string }; serverContent?: {
-            modelTurn?: { parts?: Array<{ inlineData?: { data?: string } }> };
-            inputTranscription?: { text?: string }; outputTranscription?: { text?: string };
-            interrupted?: boolean; turnComplete?: boolean;
+          const raw = typeof event.data === "string" ? event.data : event.data instanceof Blob ? await event.data.text() : "";
+          if (!raw) return;
+          const packet = JSON.parse(raw) as { error?: { message?: string; status?: string }; serverContent?: {
+            modelTurn?: { parts?: Array<{ inlineData?: { data?: string; mimeType?: string } }> };
+            inputTranscription?: { text?: string }; interimInputTranscription?: { text?: string };
+            outputTranscription?: { text?: string }; interrupted?: boolean; turnComplete?: boolean;
           }};
-          if (packet.error) { setError(packet.error.message || "The voice session encountered an error."); return; }
+          if (packet.error) { setError(packet.error.message || packet.error.status || "The voice session encountered an error."); setStatus("error"); return; }
           const data = packet.serverContent;
           if (!data) return;
           if (data.inputTranscription?.text) addLine("you", data.inputTranscription.text);
@@ -157,7 +158,8 @@ export function KidAssistant() {
             if (!part.inlineData?.data) continue;
             const samples = decodePcm(fromBase64(part.inlineData.data)), ctx = outputCtxRef.current;
             if (!ctx || !samples.length) continue;
-            const buffer = ctx.createBuffer(1, samples.length, 24000);
+            const sampleRate = Number(part.inlineData.mimeType?.split("rate=")[1]) || 24000;
+            const buffer = ctx.createBuffer(1, samples.length, sampleRate);
             buffer.copyToChannel(samples, 0);
             const source = ctx.createBufferSource(); source.buffer = buffer; source.connect(ctx.destination);
             const startAt = Math.max(ctx.currentTime + 0.025, nextTimeRef.current);
