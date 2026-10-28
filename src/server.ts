@@ -93,6 +93,55 @@ async function handleKidToken(request: Request, env: unknown): Promise<Response>
   }
 }
 
+async function handleKidMessage(request: Request, env: unknown): Promise<Response> {
+  if (request.method !== "POST") return jsonResponse({ error: "Method not allowed." }, 405);
+  const origin = request.headers.get("origin");
+  if (!origin || origin !== new URL(request.url).origin) return jsonResponse({ error: "Request origin is not allowed." }, 403);
+
+  const runtimeEnv = (env && typeof env === "object" ? env : {}) as RuntimeEnv;
+  const processEnv = typeof process !== "undefined" ? process.env : undefined;
+  const apiKey = runtimeEnv.GEMINI_API_KEY || processEnv?.GEMINI_API_KEY;
+  if (!apiKey) return jsonResponse({ error: "Kid is not configured yet. Add GEMINI_API_KEY in Vercel → Project Settings → Environment Variables, then redeploy." }, 503);
+
+  try {
+    const body = await request.json() as { message?: unknown; history?: unknown };
+    const message = typeof body.message === "string" ? body.message.trim().slice(0, 2000) : "";
+    if (!message) return jsonResponse({ error: "Type a message for Kid first." }, 400);
+    const history = Array.isArray(body.history) ? body.history.slice(-12).flatMap((item) => {
+      if (!item || typeof item !== "object") return [];
+      const entry = item as { role?: unknown; text?: unknown };
+      if ((entry.role !== "user" && entry.role !== "model") || typeof entry.text !== "string") return [];
+      const text = entry.text.trim().slice(0, 2000);
+      return text ? [{ role: entry.role, parts: [{ text }] }] : [];
+    }) : [];
+    const upstream = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent", {
+      method: "POST",
+      headers: { "x-goog-api-key": apiKey, "content-type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+        contents: [...history, { role: "user", parts: [{ text: message }] }],
+        generationConfig: { responseMimeType: "text/plain", maxOutputTokens: 700 }
+      })
+    });
+    const payload = await upstream.json().catch(() => ({})) as {
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+      error?: { message?: string };
+    };
+    if (!upstream.ok) {
+      console.error("Kid text request failed:", upstream.status, payload.error?.message || "No response");
+      return jsonResponse({ error: upstream.status === 401 || upstream.status === 403
+        ? "Gemini rejected the server API key or project access. Check the key and Google project."
+        : "Kid could not answer that message. Check Gemini project access, quota, and billing." }, 502);
+    }
+    const answer = payload.candidates?.[0]?.content?.parts?.map(part => part.text || "").join("").trim();
+    if (!answer) return jsonResponse({ error: "Kid did not return a text answer. Please try again." }, 502);
+    return jsonResponse({ answer });
+  } catch (error) {
+    console.error("Kid text endpoint failed:", error);
+    return jsonResponse({ error: "Could not reach Gemini to answer. Please try again." }, 502);
+  }
+}
+
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
@@ -122,7 +171,9 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
-    if (new URL(request.url).pathname === "/api/kid/token") return handleKidToken(request, env);
+    const pathname = new URL(request.url).pathname;
+    if (pathname === "/api/kid/token") return handleKidToken(request, env);
+    if (pathname === "/api/kid/message") return handleKidMessage(request, env);
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
