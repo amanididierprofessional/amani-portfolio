@@ -79,7 +79,13 @@ export function KidAssistant() {
   // Warm the server and Gemini route in the background on first visit. No microphone is
   // requested and no conversation content is sent; the endpoint performs a tiny warm-up.
   useEffect(() => {
-    const warm = () => { void fetch("/api/kid/warmup", { method: "POST", headers: { "content-type": "application/json" }, body: "{}", keepalive: true }).catch(() => undefined); };
+    let alreadyWarmed = false;
+    try { alreadyWarmed = sessionStorage.getItem("kid-warmed-v1") === "1"; } catch {}
+    const warm = () => {
+      if (alreadyWarmed) return;
+      try { sessionStorage.setItem("kid-warmed-v1", "1"); } catch {}
+      void fetch("/api/kid/warmup", { method: "POST", headers: { "content-type": "application/json" }, body: "{}", keepalive: true }).catch(() => undefined);
+    };
     const idleWindow = window as Window & { requestIdleCallback?: (cb: () => void, options?: { timeout: number }) => number };
     if (idleWindow.requestIdleCallback) idleWindow.requestIdleCallback(warm, { timeout: 1800 });
     else window.setTimeout(warm, 900);
@@ -268,7 +274,7 @@ export function KidAssistant() {
         {draft.trim() ? <button type="submit" aria-label="Send message" disabled={sendingText}><Send size={17}/></button> : <button type="button" className="kid-voice-composer" onClick={start} disabled={status === "connecting"} aria-label={status === "listening" || status === "speaking" ? "Voice mode active" : "Start voice mode"}><Mic size={17}/><span>{status === "connecting" ? "Connecting…" : status === "listening" || status === "speaking" ? "Voice on" : "Voice mode"}</span></button>}
       </form>
       <div className="kid-panel-footer">
-        {status === "listening" || status === "speaking" ? <button className="kid-call-pill is-active" onClick={endSession} aria-label="End voice call"><span className="kid-call-avatar"><img src={avatarUrl} alt=""/></span><span>{status === "speaking" ? "Kid is speaking" : "Listening"}</span><span className="kid-call-end"><PhoneOff size={15}/></span></button> : <button className="kid-call-pill" onClick={start} disabled={status === "connecting"}><span className="kid-call-avatar"><img src={avatarUrl} alt=""/></span><span>{status === "connecting" ? "Connecting to Kid…" : status === "error" ? "Try voice again" : "Start a voice call"}</span><Mic size={15}/></button>}
+        {status === "listening" || status === "speaking" ? <button className="kid-call-pill is-active" onClick={endSession} aria-label="End voice call"><span className="kid-call-avatar"><img src="/favicon.ico" alt=""/></span><span>{status === "speaking" ? "Kid is speaking" : "Listening"}</span><span className="kid-call-end"><PhoneOff size={15}/></span></button> : <button className="kid-call-pill" onClick={start} disabled={status === "connecting"}><span className="kid-call-avatar"><img src={avatarUrl} alt=""/></span><span>{status === "connecting" ? "Connecting to Kid…" : status === "error" ? "Try voice again" : "Start a voice call"}</span><Mic size={15}/></button>}
         <span className="kid-secure-note"><AudioLines size={12}/> Private voice session</span>
       </div>
     </section>}
