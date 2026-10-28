@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AudioLines, Mic, MicOff, Minimize2, Send, Sparkles, X } from "lucide-react";
+import { AudioLines, Mic, MicOff, Minimize2, Send, Sparkles, X, PhoneOff } from "lucide-react";
 import { avatarUrl } from "@/lib/images";
 
 type Status = "idle" | "connecting" | "listening" | "speaking" | "error";
@@ -76,6 +76,18 @@ export function KidAssistant() {
 
   useEffect(() => () => cleanup(), [cleanup]);
   useEffect(() => { if (transcriptRef.current) transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight; }, [lines]);
+  // Warm the server and Gemini route in the background on first visit. No microphone is
+  // requested and no conversation content is sent; the endpoint performs a tiny warm-up.
+  useEffect(() => {
+    const warm = () => { void fetch("/api/kid/warmup", { method: "POST", headers: { "content-type": "application/json" }, body: "{}", keepalive: true }).catch(() => undefined); };
+    const idleWindow = window as Window & { requestIdleCallback?: (cb: () => void, options?: { timeout: number }) => number };
+    if (idleWindow.requestIdleCallback) idleWindow.requestIdleCallback(warm, { timeout: 1800 });
+    else window.setTimeout(warm, 900);
+    const links = ["https://generativelanguage.googleapis.com", "wss://generativelanguage.googleapis.com"];
+    for (const href of links) {
+      const link = document.createElement("link"); link.rel = "preconnect"; link.href = href; link.crossOrigin = "anonymous"; document.head.appendChild(link);
+    }
+  }, []);
 
   const start = useCallback(async () => {
     if (["connecting", "listening", "speaking"].includes(statusRef.current)) return;
@@ -240,30 +252,29 @@ export function KidAssistant() {
   return <div className="kid-assistant-root">
     {open && <section className="kid-panel" aria-label="Talk to Kid assistant">
       <header className="kid-panel-head">
-        <div className="kid-head-identity"><span className="kid-avatar-wrap"><img src={avatarUrl} alt="" /></span><div><strong>Kid</strong><span>Your friendly portfolio guide</span></div></div>
+        <div className="kid-head-identity"><span className="kid-avatar-wrap"><img src={avatarUrl} alt="" /></span><div><strong>Kid</strong><span>{status === "speaking" ? "Speaking with you" : status === "listening" ? "Listening to you" : status === "connecting" ? "Connecting securely…" : "Your friendly portfolio guide"}</span></div></div>
         <div className="kid-head-actions">
-          {status !== "idle" && status !== "error" && <button className="kid-icon-button" onClick={endSession} aria-label="End voice session"><MicOff size={17}/></button>}
           <button className="kid-icon-button" onClick={() => setOpen(false)} aria-label="Minimize Kid"><Minimize2 size={17}/></button>
-          <button className="kid-icon-button" onClick={() => { endSession(); setOpen(false); }} aria-label="Close Kid"><X size={18}/></button>
+          <button className="kid-icon-button" onClick={() => { endSession(); setOpen(false); }} aria-label="Close Kid and end call"><X size={18}/></button>
         </div>
       </header>
-      <div className={"kid-orb-stage " + (status === "speaking" ? "is-speaking" : status === "listening" ? "is-listening" : "")}>
-        <div className="kid-orb-halo kid-halo-one"/><div className="kid-orb-halo kid-halo-two"/>
-        <div className="kid-orb"><span/><i/><b/></div><span className="kid-orb-spark kid-spark-a">✦</span><span className="kid-orb-spark kid-spark-b">✧</span>
-        <p>{status === "connecting" ? "Connecting to Kid…" : status === "listening" ? "I'm listening" : status === "speaking" ? "Kid is talking" : status === "error" ? "Let's try again" : "Ready when you are"}</p>
-      </div>
       <div className="kid-conversation" ref={transcriptRef} aria-live="polite">
         {lines.length === 0 ? <div className="kid-welcome-copy"><Sparkles size={16}/><p>Ask me about Amani, his projects, or what he is building next.</p><span>Try: “Tell me about Stoke Yange.”</span></div> : lines.map(line => <div className={"kid-message kid-message-" + line.role} key={line.id}><span>{line.role === "you" ? "You" : "Kid"}</span><p>{line.text}</p></div>)}
+        {sendingText && <div className="kid-typing" aria-label="Kid is thinking"><i/><i/><i/></div>}
       </div>
       {error && <p className="kid-error" role="alert">{error}</p>}
-      <form className="kid-text-form" onSubmit={event => { event.preventDefault(); sendText(); }}><input value={draft} onChange={event => setDraft(event.target.value)} placeholder="Type a message…" aria-label="Message Kid"/><button type="submit" aria-label="Send message" disabled={!draft.trim() || sendingText}><Send size={17}/></button></form>
+      <form className="kid-text-form" onSubmit={event => { event.preventDefault(); sendText(); }}>
+        <input value={draft} onChange={event => setDraft(event.target.value)} placeholder="Message Kid…" aria-label="Message Kid"/>
+        {draft.trim() ? <button type="submit" aria-label="Send message" disabled={sendingText}><Send size={17}/></button> : <button type="button" className="kid-voice-composer" onClick={start} disabled={status === "connecting"} aria-label={status === "listening" || status === "speaking" ? "Voice mode active" : "Start voice mode"}><Mic size={17}/><span>{status === "connecting" ? "Connecting…" : status === "listening" || status === "speaking" ? "Voice on" : "Voice mode"}</span></button>}
+      </form>
       <div className="kid-panel-footer">
-        {status === "listening" || status === "speaking" ? <button className="kid-main-action kid-stop-action" onClick={endSession}><span className="kid-pulse-dot"/> End conversation</button> : <button className="kid-main-action" onClick={start} disabled={status === "connecting"}><Mic size={17}/> {status === "connecting" ? "Connecting…" : status === "error" ? "Try again" : "Start talking"}</button>}
-        <span><AudioLines size={12}/> Live voice · Gemini</span>
+        {status === "listening" || status === "speaking" ? <button className="kid-call-pill is-active" onClick={endSession} aria-label="End voice call"><span className="kid-call-indicator"/><span>{status === "speaking" ? "Kid is speaking" : "Listening"}</span><span className="kid-call-end"><PhoneOff size={15}/></span></button> : <button className="kid-call-pill" onClick={start} disabled={status === "connecting"}><span className="kid-call-indicator"/><span>{status === "connecting" ? "Connecting to Kid…" : status === "error" ? "Try voice again" : "Start a voice call"}</span><Mic size={15}/></button>}
+        <span className="kid-secure-note"><AudioLines size={12}/> Private voice session</span>
       </div>
     </section>}
-    <button className={"kid-launcher " + (open ? "kid-launcher-open" : hovered && !open ? "kid-launcher-hover" : "")} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onClick={() => setOpen(value => !value)} aria-expanded={open} aria-label={open ? "Minimize Kid assistant" : "Talk to Kid"}>
-      <span className="kid-launcher-avatar"><img src={avatarUrl} alt=""/></span><span className="kid-launcher-label">{open ? "Kid" : "Talk to Kid"}</span><span className="kid-launcher-dot"/>
+    <button className={"kid-launcher " + (open ? "kid-launcher-open" : "") + (status === "listening" ? " is-listening" : status === "speaking" ? " is-speaking" : "")} onClick={() => setOpen(value => !value)} aria-expanded={open} aria-label={open ? "Minimize Kid assistant" : "Talk to Kid"}>
+      <span className="kid-launcher-avatar"><img src={avatarUrl} alt=""/></span><span className="kid-launcher-label">{status === "listening" ? "Listening" : status === "speaking" ? "Kid is speaking" : open ? "Kid" : "Talk to Kid"}</span>
+      {status === "listening" && <span className="kid-launcher-ring"/>}
     </button>
   </div>;
 }
