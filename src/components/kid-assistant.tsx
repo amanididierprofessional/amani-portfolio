@@ -28,6 +28,7 @@ export function KidAssistant() {
   const [status, setStatus] = useState<Status>("idle");
   const [lines, setLines] = useState<Line[]>([]);
   const [draft, setDraft] = useState("");
+  const [sendingText, setSendingText] = useState(false);
   const [error, setError] = useState("");
   const [hovered, setHovered] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
@@ -196,14 +197,43 @@ export function KidAssistant() {
   }, [addLine, cleanup, stopPlayback]);
 
   const endSession = useCallback(() => { cleanup(); setError(""); }, [cleanup]);
-  const sendText = useCallback(() => {
-    const text = draft.trim(); if (!text) return;
-    const socket = socketRef.current;
-    if (!socket || socket.readyState !== WebSocket.OPEN) { setError("Start a voice session first, then send a text message."); return; }
-    addLine("you", text);
-    socket.send(JSON.stringify({ realtimeInput: { text } }));
+  const sendText = useCallback(async () => {
+    const text = draft.trim();
+    if (!text || sendingText) return;
+    setError("");
     setDraft("");
-  }, [addLine, draft]);
+    addLine("you", text);
+    const socket = socketRef.current;
+    if (socket && socket.readyState === WebSocket.OPEN && ["listening", "speaking"].includes(statusRef.current)) {
+      try {
+        socket.send(JSON.stringify({ realtimeInput: { text } }));
+      } catch {
+        setError("Could not send that message into the live session. Please try again.");
+      }
+      return;
+    }
+
+    // Text chat works independently; visitors do not need to grant microphone access first.
+    setSendingText(true);
+    try {
+      const history = lines.slice(-12).map(line => ({
+        role: line.role === "you" ? "user" : "model",
+        text: line.text
+      }));
+      const response = await fetch("/api/kid/message", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ message: text, history })
+      });
+      const payload = await response.json().catch(() => ({})) as { answer?: string; error?: string };
+      if (!response.ok || !payload.answer) throw new Error(payload.error || "Kid could not answer. Please try again.");
+      addLine("kid", payload.answer);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not send your message to Kid.");
+    } finally {
+      setSendingText(false);
+    }
+  }, [addLine, draft, lines, sendingText]);
 
   return <div className="kid-assistant-root">
     {open && <section className="kid-panel" aria-label="Talk to Kid assistant">
@@ -224,7 +254,7 @@ export function KidAssistant() {
         {lines.length === 0 ? <div className="kid-welcome-copy"><Sparkles size={16}/><p>Ask me about Amani, his projects, or what he is building next.</p><span>Try: “Tell me about Stoke Yange.”</span></div> : lines.map(line => <div className={"kid-message kid-message-" + line.role} key={line.id}><span>{line.role === "you" ? "You" : "Kid"}</span><p>{line.text}</p></div>)}
       </div>
       {error && <p className="kid-error" role="alert">{error}</p>}
-      <form className="kid-text-form" onSubmit={event => { event.preventDefault(); sendText(); }}><input value={draft} onChange={event => setDraft(event.target.value)} placeholder="Type a message…" aria-label="Message Kid"/><button type="submit" aria-label="Send message" disabled={!draft.trim()}><Send size={17}/></button></form>
+      <form className="kid-text-form" onSubmit={event => { event.preventDefault(); sendText(); }}><input value={draft} onChange={event => setDraft(event.target.value)} placeholder="Type a message…" aria-label="Message Kid"/><button type="submit" aria-label="Send message" disabled={!draft.trim() || sendingText}><Send size={17}/></button></form>
       <div className="kid-panel-footer">
         {status === "listening" || status === "speaking" ? <button className="kid-main-action kid-stop-action" onClick={endSession}><span className="kid-pulse-dot"/> End conversation</button> : <button className="kid-main-action" onClick={start} disabled={status === "connecting"}><Mic size={17}/> {status === "connecting" ? "Connecting…" : status === "error" ? "Try again" : "Start talking"}</button>}
         <span><AudioLines size={12}/> Live voice · Gemini</span>
