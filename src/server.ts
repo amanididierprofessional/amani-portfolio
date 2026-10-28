@@ -100,7 +100,7 @@ async function handleKidWarmup(request: Request, env: unknown): Promise<Response
   const runtimeEnv = (env && typeof env === "object" ? env : {}) as RuntimeEnv;
   const processEnv = typeof process !== "undefined" ? process.env : undefined;
   const apiKey = runtimeEnv.GEMINI_API_KEY || processEnv?.GEMINI_API_KEY;
-  if (!apiKey) return jsonResponse({ warmed: false }, 204);
+  if (!apiKey) return jsonResponse({ warmed: false });
   try {
     // One short background request warms the serverless route and Google model connection.
     // It contains no visitor data and does not open a microphone or voice session.
