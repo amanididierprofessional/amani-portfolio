@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AudioLines, Mic, MicOff, Minimize2, Send, Sparkles, X, PhoneOff } from "lucide-react";
 import { avatarUrl } from "@/lib/images";
 
-type Status = "idle" | "connecting" | "listening" | "speaking" | "error";
+type Status = "idle" | "connecting" | "listening" | "speaking" | "reconnecting" | "error";
 type Line = { role: "you" | "kid"; text: string; id: number };
 const MODEL = "gemini-3.8-live";
 const SOCKET = "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContentConstrained";
@@ -30,7 +30,7 @@ export function KidAssistant() {
   const [draft, setDraft] = useState("");
   const [sendingText, setSendingText] = useState(false);
   const [error, setError] = useState("");
-  const [hovered, setHovered] = useState(false);
+  const [networkNotice, setNetworkNotice] = useState<"low" | "checking" | "">("");
   const socketRef = useRef<WebSocket | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const inputCtxRef = useRef<AudioContext | null>(null);
@@ -72,9 +72,11 @@ export function KidAssistant() {
     socketRef.current = null;
     if (socket && socket.readyState < WebSocket.CLOSING) socket.close(1000, "Session ended");
     setStatus("idle");
+    setNetworkNotice("");
   }, [stopPlayback]);
 
   useEffect(() => () => cleanup(), [cleanup]);
+  useEffect(() => { const low = () => { if (socketRef.current && navigator.onLine === false && ["listening","speaking","connecting","reconnecting"].includes(statusRef.current)) { setNetworkNotice("low"); setStatus("reconnecting"); window.setTimeout(() => { if (!navigator.onLine) setNetworkNotice("checking"); }, 1800); } }; const online = () => { if (socketRef.current && networkNotice) { setNetworkNotice("checking"); window.setTimeout(() => { if (navigator.onLine && socketRef.current?.readyState === WebSocket.OPEN) { setNetworkNotice(""); setStatus("listening"); } }, 1200); } }; window.addEventListener("offline", low); window.addEventListener("online", online); return () => { window.removeEventListener("offline", low); window.removeEventListener("online", online); }; }, [networkNotice]);
   useEffect(() => { if (transcriptRef.current) transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight; }, [lines]);
   // Warm the server and Gemini route in the background on first visit. No microphone is
   // requested and no conversation content is sent; the endpoint performs a tiny warm-up.
@@ -257,6 +259,7 @@ export function KidAssistant() {
 
   return <div className="kid-assistant-root">
     {open && <section className="kid-panel" aria-label="Talk to Kid assistant">
+      {networkNotice && <div className={"kid-network-notice " + (networkNotice === "checking" ? "is-checking" : "")} role="status"><span className="kid-network-symbol">{networkNotice === "checking" ? "↻" : "!"}</span><span><strong>{networkNotice === "checking" ? "Checking network…" : "Low network connection"}</strong><small>{networkNotice === "checking" ? "Waiting for the voice connection to recover" : "Kid may take longer to respond"}</small></span></div>}
       <header className="kid-panel-head">
         <div className="kid-head-identity"><span className="kid-avatar-wrap"><img src={avatarUrl} alt="" /></span><div><strong>Kid</strong><span>{status === "speaking" ? "Speaking with you" : status === "listening" ? "Listening to you" : status === "connecting" ? "Connecting securely…" : "Your friendly portfolio guide"}</span></div></div>
         <div className="kid-head-actions">
