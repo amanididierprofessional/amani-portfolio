@@ -97,22 +97,46 @@ export function KidAssistant() {
         socket.addEventListener("open", () => { window.clearTimeout(timer); resolve(); }, { once: true });
         socket.addEventListener("error", () => { window.clearTimeout(timer); reject(new Error("Could not connect to Gemini Live. Check API key access and network.")); }, { once: true });
       });
-      socket.send(JSON.stringify({ setup: {
-        model: "models/" + MODEL,
-        generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } } },
-        inputAudioTranscription: {}, outputAudioTranscription: {},
-        realtimeInputConfig: { automaticActivityDetection: { disabled: false, silenceDurationMs: 650, prefixPaddingMs: 250 } }
-      }}));
+      // Register the setup listener BEFORE sending the first frame so a fast setupComplete
+      // response cannot race past the listener. Gemini may also send a Blob in some browsers.
       await new Promise<void>((resolve, reject) => {
-        const timer = window.setTimeout(() => reject(new Error("Gemini did not finish setting up the session.")), 15000);
-        const onSetup = (event: MessageEvent) => {
+        let settled = false;
+        const finish = (cause?: Error) => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          socket.removeEventListener("message", onSetup);
+          socket.removeEventListener("close", onClose);
+          socket.removeEventListener("error", onSocketError);
+          if (cause) reject(cause); else resolve();
+        };
+        const timer = window.setTimeout(() => finish(new Error("Gemini did not finish setting up the session. Please try again; if it repeats, check the newest Vercel runtime log.")), 20000);
+        const onClose = (event: CloseEvent) => finish(new Error("Gemini closed the connection before setup completed (code " + event.code + ")."));
+        const onSocketError = () => finish(new Error("The connection to Gemini failed before setup completed. Check network and Gemini API access."));
+        const onSetup = async (event: MessageEvent) => {
           try {
-            const data = JSON.parse(typeof event.data === "string" ? event.data : "") as { setupComplete?: unknown; error?: { message?: string } };
-            if (data.setupComplete) { window.clearTimeout(timer); socket.removeEventListener("message", onSetup); resolve(); }
-            if (data.error) { window.clearTimeout(timer); socket.removeEventListener("message", onSetup); reject(new Error(data.error.message || "Gemini rejected the session.")); }
-          } catch {}
+            const raw = typeof event.data === "string" ? event.data : event.data instanceof Blob ? await event.data.text() : "";
+            if (!raw) return;
+            const data = JSON.parse(raw) as { setupComplete?: unknown; error?: { message?: string; code?: number; status?: string } };
+            if (data.setupComplete !== undefined) finish();
+            else if (data.error) finish(new Error(data.error.message || data.error.status || "Gemini rejected the session setup."));
+          } catch {
+            // Ignore non-JSON frames; a later setupComplete or timeout will decide the outcome.
+          }
         };
         socket.addEventListener("message", onSetup);
+        socket.addEventListener("close", onClose, { once: true });
+        socket.addEventListener("error", onSocketError, { once: true });
+        try {
+          socket.send(JSON.stringify({ setup: {
+            model: "models/" + MODEL,
+            generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } } },
+            inputAudioTranscription: {}, outputAudioTranscription: {},
+            realtimeInputConfig: { automaticActivityDetection: { disabled: false, silenceDurationMs: 650, prefixPaddingMs: 250 } }
+          }}));
+        } catch (cause) {
+          finish(cause instanceof Error ? cause : new Error("Could not send the Gemini session setup."));
+        }
       });
       socket.addEventListener("message", event => {
         if (typeof event.data !== "string") return;
