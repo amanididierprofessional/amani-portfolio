@@ -59,15 +59,19 @@ async function handleKidToken(request: Request, env: unknown): Promise<Response>
         uses: 1,
         expireTime: new Date(now + 30 * 60 * 1000).toISOString(),
         newSessionExpireTime: new Date(now + 60 * 1000).toISOString(),
-        liveConnectConstraints: {
+        bidiGenerateContentSetup: {
           model: "models/gemini-3.8-live",
-          config: {
+          generationConfig: {
             responseModalities: ["AUDIO"],
-            inputAudioTranscription: {},
-            outputAudioTranscription: {},
-            sessionResumption: {},
-            systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] }
-          }
+            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } }
+          },
+          inputAudioTranscription: {},
+          outputAudioTranscription: {},
+          sessionResumption: {},
+          realtimeInputConfig: {
+            automaticActivityDetection: { disabled: false, silenceDurationMs: 650, prefixPaddingMs: 250 }
+          },
+          systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] }
         }
       })
     });
