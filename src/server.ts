@@ -78,9 +78,13 @@ async function handleKidToken(request: Request, env: unknown): Promise<Response>
     const payload = await upstream.json().catch(() => ({})) as { name?: string; error?: { message?: string } };
     if (!upstream.ok || !payload.name) {
       console.error("Gemini ephemeral token provisioning failed:", upstream.status, payload.error?.message || "No token returned");
-      return jsonResponse({ error: upstream.status === 401 || upstream.status === 403
-        ? "Gemini rejected the server API key. Check that GEMINI_API_KEY is valid and has Live API access."
-        : "Gemini could not start a live session. Check the API key, billing, and Live API model availability." }, 502);
+      const upstreamMessage = (payload.error?.message || "").replace(/GEMINI_API_KEY|x-goog-api-key/gi, "[secret]").slice(0, 320);
+      const safeError = upstream.status === 401 || upstream.status === 403
+        ? "Gemini rejected the server API key or project access. Check the key and the selected Google project."
+        : upstream.status === 400
+          ? "Gemini rejected the Live API request: " + (upstreamMessage || "invalid request configuration")
+          : "Gemini could not start a live session. Check project access, quota, billing, and model availability.";
+      return jsonResponse({ error: safeError }, 502);
     }
     return jsonResponse({ token: payload.name, expiresAt: new Date(now + 30 * 60 * 1000).toISOString() });
   } catch (error) {
