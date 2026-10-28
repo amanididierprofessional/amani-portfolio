@@ -93,6 +93,30 @@ async function handleKidToken(request: Request, env: unknown): Promise<Response>
   }
 }
 
+async function handleKidWarmup(request: Request, env: unknown): Promise<Response> {
+  if (request.method !== "POST") return jsonResponse({ error: "Method not allowed." }, 405);
+  const origin = request.headers.get("origin");
+  if (!origin || origin !== new URL(request.url).origin) return jsonResponse({ error: "Request origin is not allowed." }, 403);
+  const runtimeEnv = (env && typeof env === "object" ? env : {}) as RuntimeEnv;
+  const processEnv = typeof process !== "undefined" ? process.env : undefined;
+  const apiKey = runtimeEnv.GEMINI_API_KEY || processEnv?.GEMINI_API_KEY;
+  if (!apiKey) return jsonResponse({ warmed: false }, 204);
+  try {
+    // One short background request warms the serverless route and Google model connection.
+    // It contains no visitor data and does not open a microphone or voice session.
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent", {
+      method: "POST",
+      headers: { "x-goog-api-key": apiKey, "content-type": "application/json" },
+      body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: "Reply with one word: Ready." }] }], generationConfig: { maxOutputTokens: 2 } })
+    });
+    if (!response.ok) console.warn("Kid background warm-up returned status:", response.status);
+    else await response.arrayBuffer();
+  } catch (error) {
+    console.warn("Kid background warm-up skipped:", error);
+  }
+  return jsonResponse({ warmed: true });
+}
+
 async function handleKidMessage(request: Request, env: unknown): Promise<Response> {
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed." }, 405);
   const origin = request.headers.get("origin");
@@ -173,6 +197,7 @@ export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     const pathname = new URL(request.url).pathname;
     if (pathname === "/api/kid/token") return handleKidToken(request, env);
+    if (pathname === "/api/kid/warmup") return handleKidWarmup(request, env);
     if (pathname === "/api/kid/message") return handleKidMessage(request, env);
     try {
       const handler = await getServerEntry();
